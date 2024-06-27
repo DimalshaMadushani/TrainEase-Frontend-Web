@@ -1,109 +1,73 @@
-//Sign up pop up
+import React from 'react';
+import { Button, TextField, Typography, Container, Grid } from '@mui/material';
+import GoogleIcon from '@mui/icons-material/Google'; // Ensure you have @mui/icons-material installed
 
-
-import React, { useState } from 'react';
-import { Modal, Box, Typography, TextField, Button, IconButton, InputAdornment, Link } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-// import LoginPopup from './LoginPopup';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-};
-
-const Register = ({ open, handleClose }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
-
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleToggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-
-  const handleOpenLogin = () => {
-    setOpenLogin(true);
-  };
-
-  const handleCloseLogin = () => {
-    setOpenLogin(false);
-  };
-
+function SignUp() {
   return (
-    <>
-    <Modal open={open} onClose={handleClose}>
-      <Box sx={style}>
-        <Typography variant="h6" component="h2">
+    <Container component="main" maxWidth="xs">
+      <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
-        <TextField label="User Name" variant="outlined" fullWidth margin="normal" />
-        <TextField label="Email" variant="outlined" fullWidth margin="normal" />
-        <TextField label="Gender" variant="outlined" fullWidth margin="normal" />
-        <TextField label="Phone Number" variant="outlined" fullWidth margin="normal" />
-        <TextField
-          label="Date of Birth"
-          type="date"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          InputLabelProps={{ shrink: true }}
-        />
-        <TextField label="Address" variant="outlined" fullWidth margin="normal" />
-        <TextField
-          label="Password"
-          type={showPassword ? 'text' : 'password'}
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleTogglePasswordVisibility}>
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          label="Confirm Password"
-          type={showConfirmPassword ? 'text' : 'password'}
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleToggleConfirmPasswordVisibility}>
-                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Button variant="contained" color="primary" fullWidth>
-          Sign Up
-        </Button>
-        <Typography variant="body2" align="center" style={{ marginTop: '8px' }}>
-            Already have an account?{' '}
-            <Link component="button" variant="body2" onClick={handleOpenLogin}>
-              Login
-            </Link>
-          </Typography>
-      </Box>
-    </Modal>
-    
-    </>
+        <form style={{ width: '100%', marginTop: 3 }} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            style={{ margin: '24px 0px 16px' }}
+          >
+            Sign Up
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Button
+                startIcon={<GoogleIcon />}
+                fullWidth
+                variant="outlined"
+                style={{ marginTop: 20 }}
+                onClick={() => console.log('Google Sign-In')}
+              >
+                Continue with Google
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
   );
-};
+}
 
-export default Register;
+export default SignUp;

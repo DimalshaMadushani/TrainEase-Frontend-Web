@@ -1,75 +1,65 @@
-//Login pop up
-//Sign In
+import React from 'react';
+import { Button, TextField, Box, Typography, Container,Link } from '@mui/material';
+import GoogleIcon from '@mui/icons-material/Google';
 
-import React, { useState } from 'react';
-import { Modal, Box, Typography, TextField, Button, IconButton, InputAdornment } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-// import SignupPopup from './SignupPopup'; 
-import Register from './Register';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-};
-
-const Login = ({ open, handleClose }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [openSignup, setOpenSignup] = useState(false); // State for SignupPopup
-
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleOpenSignup = () => {
-    setOpenSignup(true);
-  };
-
-  const handleCloseSignup = () => {
-    setOpenSignup(false);
-  };
-
+function LogIn() {
   return (
-    <>
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
-          <Typography variant="h6" component="h2">
-            Login
-          </Typography>
-          <TextField label="User Name" variant="outlined" fullWidth margin="normal" />
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        <Box component="form" sx={{ mt: 1 }}>
           <TextField
-            label="Password"
-            type={showPassword ? 'text' : 'password'}
-            variant="outlined"
-            fullWidth
             margin="normal"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleTogglePasswordVisibility} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
           />
-          <Button variant="contained" color="primary" fullWidth>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
             Login
           </Button>
-          <Typography variant="body2" align="center" style={{ marginTop: '8px' }}>
-            Don't have an account?{' '}
-            <a href="#" onClick={handleOpenSignup}>Sign Up</a> 
-          </Typography>
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<GoogleIcon />}
+            sx={{ mb: 2 }}
+          >
+            Continue with Google
+          </Button>
+          <Link href="/register" variant="body2">
+            Don't have an account? Sign up
+          </Link>
         </Box>
-      </Modal>
-      <Register open={openSignup} handleClose={handleCloseSignup} /> {/* Render SignupPopup */}
-    </>
+      </Box>
+    </Container>
   );
-};
+}
 
-export default Login;
+export default LogIn;
