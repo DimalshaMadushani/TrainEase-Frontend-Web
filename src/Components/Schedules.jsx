@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, TextField, Button, Grid, Card, CardContent, Typography, Autocomplete, Box } from '@mui/material';
 import { makeStyles } from '@mui/material/styles';
-import trainImage from '../public/pexels-chathura-anuradha-subasinghe-599124-12781427.jpg';
+//import trainImage from 'C:\Users\DELL\Desktop\SEP\TrainEase-Frontend-Web\public\pexels-chathura-anuradha-subasinghe-599124-12781427.jpg'
 
 
 // const useStyles = makeStyles({
