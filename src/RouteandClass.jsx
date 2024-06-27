@@ -41,6 +41,7 @@ const RouteandClass = () => {
         </Box>
       </Box>
 
+    <Divider/>
       <Grid container spacing={2} sx={{ marginTop: 2 }}>
         {[
           { title: '1st Class - Quiet car', price: 1000, features: ['Free WiFi', 'Power outlets', 'Free drinks', 'Wide seats'] },
@@ -78,6 +79,7 @@ const RouteandClass = () => {
           </Grid>
         ))}
       </Grid>
+      <Divider/>
     </Box>
   );
 };
