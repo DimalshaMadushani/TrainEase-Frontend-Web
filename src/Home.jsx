@@ -6,7 +6,7 @@ import { makeStyles } from '@mui/material/styles';
 
 
 
-const Data = () => {
+const Home = () => {
 //   const classes = useStyles();
 
   const stations = [
@@ -109,4 +109,4 @@ const Data = () => {
   );
 };
 
-export default Data;
+export default Home;
