@@ -1,6 +1,6 @@
 import { Schedule } from "@mui/icons-material"
 import Schedules from "./Schedules"
-import Login from "./Login"
+import RouteandClass from "./RouteandClass"
 
 function App() {
   
@@ -9,7 +9,7 @@ function App() {
     <>
       <h1>TrainEase</h1>
       {/* <Schedules /> */}
-      <Login/>
+      <RouteandClass/>
     </>
   )
 }
