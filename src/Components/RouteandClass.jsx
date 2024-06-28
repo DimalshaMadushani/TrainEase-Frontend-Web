@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Box, Grid, Paper, Typography, List, ListItem, ListItemIcon, ListItemText, Divider } from '@mui/material';
+import { Container, Box, Grid, Paper, Typography, List, ListItem, ListItemIcon, ListItemText, Divider, Button} from '@mui/material';
 import TrainIcon from '@mui/icons-material/Train';
 import CheckIcon from '@mui/icons-material/Check';
 import ArrowIcon from '@mui/icons-material/ArrowForward';
@@ -80,7 +80,9 @@ const RouteandClass = () => {
             </Grid>
           ))}
         </Grid>
-        <Divider/>
+        <Button variant="contained" color="primary" sx={{ position: 'absolute', top: 650, right: 220 }}>
+          Select Seats
+        </Button>
       </Box>
     </Container>
   );

@@ -19,8 +19,8 @@ function App() {
   return (
     <>
       <h1>TrainEase</h1>
-      {/* <Schedules />
-      <RouteandClass/> */}
+      {/* <Schedules /> */}
+      <RouteandClass/>
       <Button variant="contained" color="primary" onClick={handleOpenLogin}>
         Login
       </Button>
