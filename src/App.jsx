@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SearchBar from "./components/SearchBar";
 import Home from "./pages/Home";
+import SeatLayout1 from "./pages/SeatLayout1";
+import SeatLayout2 from "./pages/SeatLayout2";
 
 function App() {
   return (
@@ -15,6 +17,10 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         {/* <Header /> */}
+        {/* <Schedules /> */}
+        <TrainDetails/>
+        <SeatLayout1 />
+        <SeatLayout2/>
         <Box sx={{ flex: "1 0 auto", backgroundColor: "#f5f5f5" }}>
           <Routes>
             <Route path="/home" element={<Home />} />
