@@ -10,6 +10,9 @@ import SearchBar from "./components/SearchBar";
 import Home from "./pages/Home";
 import SeatLayout1 from "./pages/SeatLayout1";
 import SeatLayout2 from "./pages/SeatLayout2";
+import FirstClass from "./pages/FirstClass";
+import SecondClass from "./pages/SecondClass"
+import ThirdClass from "./pages/ThirdClass";
 
 function App() {
   return (
@@ -18,9 +21,12 @@ function App() {
       <BrowserRouter>
         {/* <Header /> */}
         {/* <Schedules /> */}
-        <TrainDetails/>
+        {/* <TrainDetails/>
         <SeatLayout1 />
-        <SeatLayout2/>
+        <SeatLayout2/> */}
+        <FirstClass/>
+        <SecondClass/>
+        <ThirdClass/>
         <Box sx={{ flex: "1 0 auto", backgroundColor: "#f5f5f5" }}>
           <Routes>
             <Route path="/home" element={<Home />} />
