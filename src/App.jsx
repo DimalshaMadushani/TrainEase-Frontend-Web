@@ -8,13 +8,14 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SearchBar from "./components/SearchBar";
 import Home from "./pages/Home";
+import Header from "./components/Header";
 
 function App() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <CssBaseline />
       <BrowserRouter>
-        {/* <Header /> */}
+        <Header />
         <Box sx={{ flex: "1 0 auto", backgroundColor: "#f5f5f5" }}>
           <Routes>
             <Route path="/home" element={<Home />} />
