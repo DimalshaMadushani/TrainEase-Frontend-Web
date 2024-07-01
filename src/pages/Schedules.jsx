@@ -12,7 +12,7 @@ import { Navigate } from 'react-router-dom';
 
 
 const stations = [
-  { label: 'Beliatta' },
+  { label: 'Beliaththa' },
   { label: 'Tangalle' },
   { label: 'Matara' },
   { label: 'Galle' },
@@ -26,7 +26,7 @@ const stations = [
   { label: 'Jaffna' },
   { label: 'Badulla' },
   { label: 'Nanu Oya' },
-  { label: 'Hatton' },
+  { label: 'Maradana' },
   { label: 'Kandy' },
   { label: 'Peradeniya' },
   { label: 'Polgahawela' },
@@ -41,19 +41,14 @@ export default function Schedules()  {
   const [to, setTo] = useState('');
   const [date, setDate] = useState('');
   const [schedules, setSchedules] = useState([]);
+
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const {currentUser} = useSelector((state) => state.user);
   // console.log(schedules)
 
-  // const handleOpen = () => {
-  //   if (!currentUser) {
-  //     setOpen(true);
-  //     return;
-  //   }
-  //   navigate('/train-details');
-  // };
-
+  
+  //here this full schedule refers to [scheduleObj, fromStopObj, toStopObj]
   const handleOpen = (fullSchedule) => {
     if (!currentUser) {
       setOpen(true);
@@ -61,12 +56,12 @@ export default function Schedules()  {
     }
     // You can pass the schedule ID to the TrainDetails page using the location state
     navigate('/train-details', { state: { fullSchedule } });
-    console.log("full schedule from schedules page ",fullSchedule);
+    // console.log("full schedule from schedules page ",fullSchedule);
   };
   
   const handleClose = () => setOpen(false);
 
-  // Use useEffect to set the initial state from the navigation state
+  // Use useEffect to set the initial state from the navigation state and show the schedules
   useEffect(() => {
     if (location.state) {
       const { schedules, searchParams } = location.state;
@@ -119,7 +114,7 @@ const handleSearch = async () => {
             <Card onClick={() => handleOpen(schedule)} key={index}>
               <CardContent>
                 <Typography variant="h6">{schedule.fromStop.departureTime} ➔ {schedule.toStop.arrivalTime}</Typography>
-                <Typography variant="body2">{schedule.schedule.trainRef.name}</Typography>
+                <Typography variant="body2" sx={{my:2}}>{schedule.schedule.trainRef.name}</Typography>
                 <Typography variant="body2">Price: Rs{schedule.toStop.price}</Typography>
               </CardContent>
             </Card>
