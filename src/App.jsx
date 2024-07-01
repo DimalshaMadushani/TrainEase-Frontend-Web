@@ -15,6 +15,7 @@ import SecondClass from "./pages/SecondClass"
 import ThirdClass from "./pages/ThirdClass";
 import Checkout from "./pages/Checkout";
 import SuccessPopup from "./Popups/PaymentSuccessfull";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -29,8 +30,9 @@ function App() {
         {/* <FirstClass/>
         <SecondClass/>
         <ThirdClass/> */}
-        <Checkout/>
-        <SuccessPopup/>
+        {/* <Checkout/> */}
+        {/* <SuccessPopup/> */}
+        <Profile/>
         <Box sx={{ flex: "1 0 auto", backgroundColor: "#f5f5f5" }}>
           <Routes>
             <Route path="/home" element={<Home />} />
