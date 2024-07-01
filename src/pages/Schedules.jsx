@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Card, CardContent, Typography, Dialog } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'; // For getting the data from the previous page, this is a hook
 import LoginPopUp from './LoginPopUp';
 import SearchBar from '../components/SearchBar';
 import axios from 'axios';
@@ -35,6 +35,7 @@ const stations = [
 ];
 export default function Schedules()  {
 
+  //this location is used to get the data from the previous page
   const location = useLocation();
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
@@ -43,14 +44,26 @@ export default function Schedules()  {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const {currentUser} = useSelector((state) => state.user);
+  // console.log(schedules)
 
-  const handleOpen = () => {
+  // const handleOpen = () => {
+  //   if (!currentUser) {
+  //     setOpen(true);
+  //     return;
+  //   }
+  //   navigate('/train-details');
+  // };
+
+  const handleOpen = (fullSchedule) => {
     if (!currentUser) {
       setOpen(true);
       return;
     }
-    navigate('/train-details');
+    // You can pass the schedule ID to the TrainDetails page using the location state
+    navigate('/train-details', { state: { fullSchedule } });
+    console.log("full schedule from schedules page ",fullSchedule);
   };
+  
   const handleClose = () => setOpen(false);
 
   // Use useEffect to set the initial state from the navigation state
@@ -63,6 +76,8 @@ export default function Schedules()  {
       setDate(searchParams.date);
     }
   }, [location.state]);
+
+  // console.log(schedules)
 
   // console.log("schedule" ,schedules, "from",from,"to", to, "date",date)
   // In Home component
@@ -100,7 +115,8 @@ const handleSearch = async () => {
       <Grid container spacing={2} style={{ marginTop: '20px' }}>
         {schedules.map((schedule, index) => (
           <Grid item xs={12} key={index}>
-            <Card onClick={handleOpen}>
+            {/* <Card onClick={handleOpen}> */}
+            <Card onClick={() => handleOpen(schedule)} key={index}>
               <CardContent>
                 <Typography variant="h6">{schedule.fromStop.departureTime} ➔ {schedule.toStop.arrivalTime}</Typography>
                 <Typography variant="body2">{schedule.schedule.trainRef.name}</Typography>
@@ -110,15 +126,7 @@ const handleSearch = async () => {
           </Grid>
         ))}
       </Grid>
-        {/* {
-          !currentUser ? (
-            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
-              <Login onClose={handleClose} />
-            </Dialog>
-          ) : (
-            <Navigate to="/train-details" />
-          )
-        } */}
+       
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
         <LoginPopUp onClose={handleClose} />
       </Dialog>

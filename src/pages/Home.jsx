@@ -59,10 +59,11 @@ const handleSearch = async () => {
     return;
   }
   try {
-    const response = await axios.get(`http://localhost:3000/api/schedules`, {
+    const response = await axios.get(`/api/schedules`, {
       params: { fromName: from, toName: to, date: date }
     });
     if (response.status === 200) {
+      //by using navigate we can pass the data to the next page and we can access it using location.state
       navigate('/schedules', { state: { schedules: response.data, searchParams: { from, to, date } } });
     } else {
       throw new Error("Failed to fetch schedules");
