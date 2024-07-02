@@ -5,14 +5,14 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 const stations = [
-    { label: 'Beliatta' },
+    { label: 'Beliaththa' },
     { label: 'Tangalle' },
     { label: 'Matara' },
     { label: 'Galle' },
     { label: 'Kalutara' },
     { label: 'Colombo Fort' },
     { label: 'Negombo' },
-    { label: 'Chilaw' },]
+    { label: 'Maradana' },]
 
    
     
@@ -63,8 +63,10 @@ const handleSearch = async () => {
       params: { fromName: from, toName: to, date: date }
     });
     if (response.status === 200) {
+      setSchedules(response.data);
       //by using navigate we can pass the data to the next page and we can access it using location.state
-      navigate('/schedules', { state: { schedules: response.data, searchParams: { from, to, date } } });
+      //here this response.data(schedules) contains schedule object and two stop objects which are sent from backend
+      navigate('/schedules', { state: {schedules, searchParams: { from, to, date } } });
     } else {
       throw new Error("Failed to fetch schedules");
     }
