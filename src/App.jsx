@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import SearchBar from "./components/SearchBar";
 import Home from "./pages/Home";
 import Header from "./components/Header";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
             <Route path="/train-details" element={<TrainDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
+
           </Routes>
         </Box>
         {/* <Footer /> */}
