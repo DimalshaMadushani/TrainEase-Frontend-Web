@@ -8,31 +8,8 @@ import SearchBar from '../components/SearchBar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 
 
-const stations = [
-  { label: 'Beliaththa' },
-  { label: 'Tangalle' },
-  { label: 'Matara' },
-  { label: 'Galle' },
-  { label: 'Kalutara' },
-  { label: 'Colombo Fort' },
-  { label: 'Negombo' },
-  { label: 'Chilaw' },
-  { label: 'Puttalam' },
-  { label: 'Anuradhapura' },
-  { label: 'Vavuniya' },
-  { label: 'Jaffna' },
-  { label: 'Badulla' },
-  { label: 'Nanu Oya' },
-  { label: 'Maradana' },
-  { label: 'Kandy' },
-  { label: 'Peradeniya' },
-  { label: 'Polgahawela' },
-
- 
-];
 export default function Schedules()  {
 
   //this location is used to get the data from the previous page
@@ -41,6 +18,7 @@ export default function Schedules()  {
   const [to, setTo] = useState('');
   const [date, setDate] = useState('');
   const [schedules, setSchedules] = useState([]);
+  const [stations, setStations] = useState([]);
 
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -72,6 +50,27 @@ export default function Schedules()  {
     }
   }, [location.state]);
 
+  // Fetch stations from the backend to show in the search bar
+  useEffect(() => {
+    async function fetchStations() {
+      try {
+        const response = await axios.get('/api/stations');
+        if (response.status === 200) {
+          const resStations = response.data.map(station => ({
+            label: station.name
+          }));
+          setStations(resStations);
+        } else {
+          throw new Error('Failed to fetch stations');
+        }
+      } catch (error) {
+        console.error('Failed to fetch stations:', error);
+        alert('Failed to load stations: ' + (error.response && error.response.data.message ? error.response.data.message : error.message));
+      }
+    }
+    fetchStations();
+  }, []);
+
   // console.log(schedules)
 
   // console.log("schedule" ,schedules, "from",from,"to", to, "date",date)
@@ -86,6 +85,7 @@ const handleSearch = async () => {
       params: { fromName: from, toName: to, date: date }
     });
     if (response.status === 200) {
+      console.log("response.data", response.data)
       navigate('/schedules', { state: { schedules: response.data, searchParams: { from, to, date } } });
     } else {
       throw new Error("Failed to fetch schedules");

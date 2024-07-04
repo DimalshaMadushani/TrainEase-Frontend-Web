@@ -1,29 +1,53 @@
-import React from 'react'
-import SearchBar from '../components/SearchBar'
-import { useState } from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import React from "react";
+import SearchBar from "../components/SearchBar";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const stations = [
-    { label: 'Beliaththa' },
-    { label: 'Tangalle' },
-    { label: 'Matara' },
-    { label: 'Galle' },
-    { label: 'Kalutara' },
-    { label: 'Colombo Fort' },
-    { label: 'Negombo' },
-    { label: 'Maradana' },]
+// const stations = [
+//   { label: "Beliaththa" },
+//   { label: "Tangalle" },
+//   { label: "Matara" },
+//   { label: "Galle" },
+//   { label: "Kalutara" },
+//   { label: "Colombo Fort" },
+//   { label: "Negombo" },
+//   { label: "Maradana" },
+// ];
 
-   
-    
 export default function Home() {
-
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
-  const [date, setDate] = useState('');
-  const [schedules, setSchedules] = useState([]);
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [date, setDate] = useState("");
+  const [stations, setStations] = useState([]);
+  // const [schedules, setSchedules] = useState([]);
   //define navigate
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchStations() {
+      try {
+        const response = await axios.get("/api/stations");
+        if (response.status === 200) {
+          const resStations = response.data.map((station) => ({
+            label: station.name,
+          }));
+          setStations(resStations);
+        } else {
+          throw new Error("Failed to fetch stations");
+        }
+      } catch (error) {
+        console.error("Failed to fetch stations:", error);
+        alert(
+          "Failed to load stations: " +
+            (error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message)
+        );
+      }
+    }
+    fetchStations();
+  }, []);
 
   // const handleSearch = async () => {
   //   if (!from || !to || !date) {
@@ -53,34 +77,46 @@ export default function Home() {
   //   }
   // };
   // In Home component
-const handleSearch = async () => {
-  if (!from || !to || !date) {
-    alert("Please fill all fields");
-    return;
-  }
-  try {
-    const response = await axios.get(`/api/schedules`, {
-      params: { fromName: from, toName: to, date: date }
-    });
-    if (response.status === 200) {
-      setSchedules(response.data);
-      //by using navigate we can pass the data to the next page and we can access it using location.state
-      //here this response.data(schedules) contains schedule object and two stop objects which are sent from backend
-      navigate('/schedules', { state: {schedules, searchParams: { from, to, date } } });
-    } else {
-      throw new Error("Failed to fetch schedules");
+  const handleSearch = async () => {
+    if (!from || !to || !date) {
+      alert("Please fill all fields");
+      return;
     }
-  } catch (error) {
-    console.error("Failed to fetch schedules:", error);
-    alert("Failed to load schedules: " + (error.response && error.response.data.message ? error.response.data.message : error.message));
-  }
-};
-
+    try {
+      const response = await axios.get(`/api/schedules`, {
+        params: { fromName: from, toName: to, date: date },
+      });
+      if (response.status === 200) {
+        // setSchedules(response.data);
+        //by using navigate we can pass the data to the next page and we can access it using location.state
+        //here this response.data(schedules) contains schedule object and two stop objects which are sent from backend
+        navigate("/schedules", {
+          state: { schedules: response.data, searchParams: { from, to, date } },
+        });
+      } else {
+        throw new Error("Failed to fetch schedules");
+      }
+    } catch (error) {
+      console.error("Failed to fetch schedules:", error);
+      alert(
+        "Failed to load schedules: " +
+          (error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message)
+      );
+    }
+  };
 
   return (
     <div>
-        <SearchBar stations={stations} onSearch={handleSearch} setFrom={setFrom} setTo={setTo} setDate={setDate} />
+      <SearchBar
+        stations={stations}
+        onSearch={handleSearch}
+        setFrom={setFrom}
+        setTo={setTo}
+        setDate={setDate}
+      />
       Home
     </div>
-  )
+  );
 }
