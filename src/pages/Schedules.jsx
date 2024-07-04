@@ -33,7 +33,7 @@ export default function Schedules()  {
       return;
     }
     // You can pass the schedule ID to the TrainDetails page using the location state
-    navigate('/train-details', { state: { fullSchedule } });
+    navigate('/train-details', { state: { fullSchedule, date } });
     // console.log("full schedule from schedules page ",fullSchedule);
   };
   
