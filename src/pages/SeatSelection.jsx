@@ -2,8 +2,9 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import SeatLayout from "../components/SeatLayout";
+import TripSummary from "../components/TripSummary";
 
 // const coaches = [
 //   {
@@ -63,8 +64,20 @@ import SeatLayout from "../components/SeatLayout";
 export default function SeatSelection() {
   const [coaches, setCoaches] = useState([]);
   const location = useLocation();
+  const [selectedSeats, setSelectedSeats] = useState([]);
   const { selectedClass, fromStop, toStop, date, schedule } = location.state;
-  console.log(location.state);
+  console.log("selected Seats:", selectedSeats);
+  console.log("selected class:", selectedClass);  
+
+  //this function will be called when a seat is selected, it will add or remove the seat from the selectedSeats array
+  //basically it will toggle the seat selection
+  const handleSeatSelection = (seatId) => {
+    if (selectedSeats.includes(seatId)) {
+      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatId));
+    } else {
+      setSelectedSeats([...selectedSeats, seatId]);
+    }
+  };
   useEffect(() => {
     const fetchSeats = async () => {
       try {
@@ -87,6 +100,13 @@ export default function SeatSelection() {
   }, [location.state]);
 
   return (
+    <Grid
+      container
+      spacing={2}
+      justifyContent="center"
+      alignItems="center"
+      marginTop="20px">
+    <Grid item xs={12} md={6}>
     <Box
       display="flex"
       flexDirection="column"
@@ -97,9 +117,6 @@ export default function SeatSelection() {
       overflow="auto"
       marginLeft="200px"
     >
-      <Typography variant="h5" marginBottom="20px" marginTop="100px">
-        First Class Coaches
-      </Typography>
       <Box
         display="flex"
         flexDirection="column"
@@ -110,12 +127,17 @@ export default function SeatSelection() {
         {coaches.map((coach) => (
           <Box key={coach._id} marginBottom={4}>
             <Typography variant="h6" marginBottom="10px">
-              Coach {coach.id}
+              Coach Number {coach.coachNumber}
             </Typography>
-            <SeatLayout seats={coach.seats} bookedSeats={coach.alreadyBookedSeats} />
+            <SeatLayout seats={coach.seats} bookedSeats={coach.alreadyBookedSeats} selectedSeats={selectedSeats} onSeatSelection={handleSeatSelection} />
           </Box>
         ))}
       </Box>
     </Box>
+    </Grid>
+    <Grid item xs={12} md={6}>
+      <TripSummary selectedClass={selectedClass} fromStop={fromStop} toStop={toStop} date={date} selectedSeatCount={selectedSeats.length} />
+    </Grid>
+    </Grid>
   );
 }
