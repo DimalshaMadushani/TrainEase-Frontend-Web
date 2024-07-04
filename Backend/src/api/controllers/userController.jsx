@@ -1,6 +1,7 @@
-const User = require('../models/userModel');
+const User = require('../models/userModel.jsx');
 
-const getUserProfile = async (req, res) => {
+// Get user profile by username
+exports.getUserProfile = async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username });
         if (user) {
@@ -14,7 +15,8 @@ const getUserProfile = async (req, res) => {
     }
 };
 
-const updateUserProfile = async (req, res) => {
+// Update user profile
+exports.updateUserProfile = async (req, res) => {
     try {
         const updatedUser = await User.findOneAndUpdate(
             { username: req.params.username },
@@ -32,7 +34,8 @@ const updateUserProfile = async (req, res) => {
     }
 };
 
-const addNewUserProfile = async (req, res) => {
+// Add new user profile
+exports.addUserProfile = async (req, res) => {
     try {
         const existingUser = await User.findOne({ username: req.body.username });
         if (existingUser) {
@@ -50,10 +53,4 @@ const addNewUserProfile = async (req, res) => {
             res.status(500).json({ error: 'Internal server error' });
         }
     }
-};
-
-module.exports = {
-    getUserProfile,
-    updateUserProfile,
-    addNewUserProfile,
 };

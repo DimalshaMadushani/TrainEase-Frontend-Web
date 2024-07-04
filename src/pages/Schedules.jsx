@@ -1,12 +1,8 @@
-
-
-import React, { useState } from 'react';
-import { Container, TextField, Button, Grid, Card, CardContent, Typography, Autocomplete, Box, Dialog } from '@mui/material';
-import Login from './Login';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Container, Grid, Card, CardContent, Typography, Box, Dialog } from '@mui/material';
 import SearchBar from '../components/SearchBar';
-
-// const stations = [/* your stations array */];
-// const schedules = [/* your schedules array */];
+import Login from './Login';
 
 const stations = [
   { label: 'Beliatta' },
@@ -27,55 +23,32 @@ const stations = [
   { label: 'Kandy' },
   { label: 'Peradeniya' },
   { label: 'Polgahawela' },
-
- 
 ];
 
-const schedules = [
-  { time: '05:35 ➔ 09:34', duration: '3h 59m', type: 'Direct', price: 'Rs200.00' },
-  { time: '06:35 ➔ 10:34', duration: '3h 59m', type: 'Direct', price: 'Rs100.00' },
-  { time: '07:35 ➔ 11:34', duration: '3h 59m', type: 'Direct', price: 'Rs250.00' },
-  { time: '07:50 ➔ 12:20', duration: '4h 30m', type: '1 change', price: 'Rs100.00' },
-  { time: '08:35 ➔ 12:34', duration: '3h 59m', type: 'Direct', price: 'Rs50.00' },
-  { time: '09:35 ➔ 13:34', duration: '3h 59m', type: 'Direct', price: 'Rs150.00' },
-  { time: '10:35 ➔ 14:34', duration: '3h 59m', type: 'Direct', price: 'Rs200.00' },
-];
 const Schedules = () => {
+  const [schedules, setSchedules] = useState([]);
   const [open, setOpen] = useState(false);
+  const [searchParams, setSearchParams] = useState({ from: '', to: '', date: '' });
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleSearch = () => {
-    // Implement search functionality here
-    console.log("Search clicked");
+  const handleSearch = (from, to, date) => {
+    setSearchParams({ from, to, date });
   };
 
+  useEffect(() => {
+    if (searchParams.from && searchParams.to && searchParams.date) {
+      axios.get(`/api/schedules`, { params: searchParams })
+        .then(response => setSchedules(response.data))
+        .catch(error => console.error('Error fetching schedules:', error));
+    }
+  }, [searchParams]);
 
   return (
     <Container>
       <Typography variant="h4" gutterBottom>Schedules</Typography>
-      <SearchBar stations={stations} onSearch={handleSearch}/>
-      {/* <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12} md={3}>
-          <Autocomplete
-            options={stations}
-            renderInput={(params) => <TextField {...params} label="From" variant="outlined" />}
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <Autocomplete
-            options={stations}
-            renderInput={(params) => <TextField {...params} label="To" variant="outlined" />}
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <TextField type="date" variant="outlined" fullWidth defaultValue="2024-06-27" />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <Button variant="contained" color="primary" fullWidth>Search</Button>
-        </Grid>
-      </Grid> */}
+      <SearchBar stations={stations} onSearch={handleSearch} />
       <Grid container spacing={2} style={{ marginTop: '20px' }}>
         {schedules.map((schedule, index) => (
           <Grid item xs={8} key={index}>

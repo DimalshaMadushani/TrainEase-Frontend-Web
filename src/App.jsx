@@ -23,7 +23,7 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         {/* <Header /> */}
-        {/* <Schedules /> */}
+        <Schedules />
         {/* <TrainDetails/>
         <SeatLayout1 />
         <SeatLayout2/> */}
@@ -32,7 +32,7 @@ function App() {
         <ThirdClass/> */}
         {/* <Checkout/> */}
         {/* <SuccessPopup/> */}
-        <Profile/>
+        {/* <Profile/> */}
         <Box sx={{ flex: "1 0 auto", backgroundColor: "#f5f5f5" }}>
           <Routes>
             <Route path="/home" element={<Home />} />
