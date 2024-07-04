@@ -10,6 +10,7 @@ import SearchBar from "./components/SearchBar";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Profile from "./pages/Profile";
+import SeatSelection from "./pages/SeatSelection";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/schedules" element={<Schedules />} />
             <Route path="/train-details" element={<TrainDetails />} />
+            <Route path="/seat-selection" element={<SeatSelection />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />

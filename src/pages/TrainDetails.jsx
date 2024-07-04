@@ -25,8 +25,8 @@ export default function TrainDetails() {
   const [selectedClass, setSelectedClass] = useState(null); // State to track selected class
   const navigate = useNavigate();
 
-  const { schedule, fromStop, toStop, date } = location.state.fullSchedule; // we don't need date in this page, but we need it in the seat selection page
-
+  const { schedule, fromStop, toStop } = location.state.fullSchedule; // we don't need date in this page, but we need it in the seat selection page
+  const date = location.state.date;
   useEffect(() => {
     const fetchTrainDetails = async () => {
       try {
@@ -65,6 +65,7 @@ export default function TrainDetails() {
     navigate("/seat-selection", {
       state: {
         selectedClass: {
+          _id: selectedClass._id,
           name: selectedClass.name,
           priceFactor: selectedClass.priceFactor,
         },
