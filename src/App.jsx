@@ -12,6 +12,7 @@ import Header from "./components/Header";
 import Profile from "./pages/Profile";
 import SeatSelection from "./pages/SeatSelection";
 import CheckOut from "./pages/CheckOut";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/checkout" element={<CheckOut />} />
           </Routes>
         </Box>
