@@ -1,6 +1,6 @@
 //App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {CssBaseline} from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { Box } from "@mui/system";
 import Schedules from "./pages/Schedules";
 import TrainDetails from "./pages/TrainDetails";
@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import Profile from "./pages/Profile";
 import SeatSelection from "./pages/SeatSelection";
+import CheckOut from "./pages/CheckOut";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
-
+            <Route path="/checkout" element={<CheckOut />} />
           </Routes>
         </Box>
         {/* <Footer /> */}

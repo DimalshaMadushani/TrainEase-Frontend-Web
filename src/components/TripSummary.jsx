@@ -170,11 +170,11 @@ const TripSummary = ({ selectedClass, fromStop, toStop, date, selectedSeatCount,
           </Typography>
           <Typography variant="body1" gutterBottom>
             <strong>Fare Calculation: </strong>
-            <span style={{ color: '#207497', fontWeight: 'bold' }}>{toStop.price - fromStop.price} x {selectedSeatCount}</span>
+            <span style={{ color: '#207497', fontWeight: 'bold' }}>{selectedClass.priceFactor * (toStop.price - fromStop.price)} x {selectedSeatCount}</span>
           </Typography>
           <Typography variant="body1" gutterBottom>
             <strong>Total: </strong>
-            <span style={{ color: '#207497', fontWeight: 'bold' }}>{selectedSeatCount * selectedClass.priceFactor * (toStop.price - fromStop.price)} LKR</span>
+            <span style={{ color: '#207497', fontWeight: 'bold' }}>LKR {selectedSeatCount * selectedClass.priceFactor * (toStop.price - fromStop.price)}</span>
           </Typography>
         </Box>
       </Box>

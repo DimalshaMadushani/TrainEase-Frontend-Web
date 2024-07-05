@@ -78,6 +78,7 @@ export default function SeatSelection() {
             bookingId: response.data.bookingId,
             expireTime: response.data.expireTime,
           },
+          replace: true,
         });
       }
     }
