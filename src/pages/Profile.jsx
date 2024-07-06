@@ -19,9 +19,11 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import BookingHistory from '../components/BookingHistory';
 
 export default function Profile(){
     const { currentUser, error, loading } = useSelector((state) => state.user);
+    const [showBooking, setShowBooking] = useState(false);
     const navigate = useNavigate();
 
     const handleEditProfile = () => {
@@ -35,6 +37,10 @@ export default function Profile(){
         } catch (error) {
             console.error('Failed to sign out:', error);
         }
+    }
+
+    const handleShowBooking = () => {
+        setShowBooking(prev => !prev);
     }
 
     
@@ -58,6 +64,10 @@ export default function Profile(){
                 <Button variant="contained" color="primary" onClick={handleEditProfile}>Edit Profile</Button>
                 <Button variant="contained" color="secondary" sx={{ ml: 2 }} onClick={handleSignout}>Sign out</Button>
             </Box>
+            <Box sx={{ my: 2 }}>
+                <Button variant='outlined' fullWidth onClick={handleShowBooking}>show booking history</Button>
+            </Box>
+            {showBooking && <BookingHistory />}
         </Container>
     );
 }
