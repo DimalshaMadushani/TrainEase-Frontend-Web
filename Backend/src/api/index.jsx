@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRoutes.jsx');
 const scheduleRoutes = require('./routes/schedulesRoutes.jsx');
 const stationRoutes = require('./routes/stationRoutes.jsx');
 const stopRoutes = require('./routes/stopRoutes.jsx');
+const authRoutes = require('./routes/authRoutes.jsx');
 
 const app = express();
 const PORT = 5000;
@@ -28,6 +29,9 @@ app.use('/profile', userRoutes);
 app.use('/api', scheduleRoutes);
 app.use('/api', stopRoutes);
 app.use('/api', stationRoutes);
+
+// Auth Routes
+app.use('/api/auth', authRoutes);
 
 // Start server
 app.listen(PORT, () => {

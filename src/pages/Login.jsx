@@ -1,8 +1,24 @@
-import React from 'react';
-import { Button, TextField, Box, Typography, Container,Link } from '@mui/material';
+import React, { useState } from 'react';
+import { Button, TextField, Box, Typography, Container, Link } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
+import axios from 'axios';
 
 function LogIn() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/auth/login', { email, password });
+      console.log(response.data);
+      // Handle successful login, e.g., store the token, redirect, etc.
+    } catch (error) {
+      console.error('Login failed:', error);
+      // Handle login failure, e.g., show an error message
+    }
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -16,7 +32,7 @@ function LogIn() {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <Box component="form" sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -26,6 +42,8 @@ function LogIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -36,6 +54,8 @@ function LogIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Button
             type="submit"
