@@ -1,27 +1,18 @@
+
 import React from "react";
 import SearchBar from "../components/SearchBar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import HomeImg from "../assets/home_img2.jpg";
 
-// const stations = [
-//   { label: "Beliaththa" },
-//   { label: "Tangalle" },
-//   { label: "Matara" },
-//   { label: "Galle" },
-//   { label: "Kalutara" },
-//   { label: "Colombo Fort" },
-//   { label: "Negombo" },
-//   { label: "Maradana" },
-// ];
+import { Calculate, Opacity } from "@mui/icons-material";
 
 export default function Home() {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [date, setDate] = useState("");
   const [stations, setStations] = useState([]);
-  // const [schedules, setSchedules] = useState([]);
-  //define navigate
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,34 +40,6 @@ export default function Home() {
     fetchStations();
   }, []);
 
-  // const handleSearch = async () => {
-  //   if (!from || !to || !date) {
-  //     alert("Please fill all fields");
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.get(`http://localhost:3000/api/schedules`, {
-  //       params: {
-  //         fromName: from,
-  //         toName: to,
-  //         date: date
-  //       }
-  //     });
-  //     // Axios automatically parses the JSON response, so no need to call `.json()`
-  //     if (response.status === 200) {
-  //       setSchedules(response.data);
-  //       navigate('/schedules');
-
-  //     } else {
-  //       throw new Error("Failed to fetch schedules");
-  //     }
-  //   } catch (error) {
-  //     console.error("Failed to fetch schedules:", error);
-  //     // Check if error.response exists and use error.response.data.message if available
-  //     alert("Failed to load schedules: " + (error.response && error.response.data.message ? error.response.data.message : error.message));
-  //   }
-  // };
-  // In Home component
   const handleSearch = async () => {
     if (!from || !to || !date) {
       alert("Please fill all fields");
@@ -87,9 +50,6 @@ export default function Home() {
         params: { fromName: from, toName: to, date: date },
       });
       if (response.status === 200) {
-        // setSchedules(response.data);
-        //by using navigate we can pass the data to the next page and we can access it using location.state
-        //here this response.data(schedules) contains schedule object and two stop objects which are sent from backend
         navigate("/schedules", {
           state: { schedules: response.data, searchParams: { from, to, date } },
         });
@@ -107,16 +67,48 @@ export default function Home() {
     }
   };
 
+  const styles = {
+    homeContainer: {
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${HomeImg})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      height: "calc(100vh - 160px)", // 80px is the height of the header
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign: "center",
+    },
+    searchBarContainer: {
+      backgroundColor: "rgb(244, 246, 246, 0.6)",
+      
+      padding: "20px",
+      borderRadius: "10px",
+      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+      width: "80%",
+    },
+    // formControl: {
+    //   width: "100%",
+    //   maxWidth: "500px",
+    //   margin: "10px auto",
+    // },
+    // button: {
+    //   width: "100%",
+    //   maxWidth: "150px",
+    //   marginTop: "10px",
+    // },
+  };
+
   return (
-    <div>
-      <SearchBar
-        stations={stations}
-        onSearch={handleSearch}
-        setFrom={setFrom}
-        setTo={setTo}
-        setDate={setDate}
-      />
-      Home
+    <div style={styles.homeContainer}>
+      <div style={styles.searchBarContainer}>
+        <SearchBar
+          stations={stations}
+          onSearch={handleSearch}
+          setFrom={setFrom}
+          setTo={setTo}
+          setDate={setDate}
+        />
+      </div>
     </div>
   );
 }
