@@ -2,16 +2,28 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Box, Grid, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  Button,
+  Container,
+  Snackbar,
+  IconButton,
+  Alert,
+} from "@mui/material";
 import SeatLayout from "../components/SeatLayout";
 import TripSummary from "../components/TripSummary";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import TrainTwoToneIcon from "@mui/icons-material/TrainTwoTone";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function SeatSelection() {
   const [coaches, setCoaches] = useState([]);
   const location = useLocation();
   const [selectedSeatIds, setSelectedSeatIds] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const { selectedClass, fromStop, toStop, date, schedule } = location.state;
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
@@ -51,7 +63,7 @@ export default function SeatSelection() {
   // this function will call api call for holding the seats
   const goToCheckOut = async () => {
     if (selectedSeatIds.length === 0) {
-      alert("Please select at least one seat");
+      setOpenSnackbar(true);
       return;
     } else {
       const response = await axios.post("/api/holdSeats", {
@@ -84,40 +96,83 @@ export default function SeatSelection() {
     }
   };
 
-  // selectedClass, fromStop, toStop, date, selectedSeatCount,trainName
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   return (
-    <>
+    <Container>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="secondary"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Please select at least one seat
+        </Alert>
+      </Snackbar>
+      <Box>
+        <Typography variant="h4" textAlign="center" marginTop="20px">
+          Select Your Seats
+        </Typography>
+      </Box>
       <Grid
         container
         spacing={2}
         justifyContent="center"
-        alignItems="center"
-        marginTop="20px"
+        alignItems="flex-start"
+        my={2}
       >
         <Grid item xs={12} md={6}>
-          <Box
+          {/* <Box
             display="flex"
             flexDirection="column"
-            alignItems="flex-start"
-            height="100vh"
+            height="600px"
             padding="20px"
             bgcolor="#f5f5f5"
-            overflow="auto"
-            marginLeft="200px"
-          >
+            alignItems={{ xs: "center", lg: "flex-start" }}
+          > */}
             <Box
               display="flex"
               flexDirection="column"
-              overflow="auto"
-              height="80vh"
-              alignItems="flex-start"
+              overflow="scroll"
+              height="500px"
+              maxWidth={470}
+              border="1px solid #1C2938"
+              padding={3}
+              borderRadius="8px"
             >
               {coaches.map((coach) => (
                 <Box key={coach._id} marginBottom={4}>
-                  <Typography variant="h6" marginBottom="10px">
-                    Coach Number {coach.coachNumber}
-                  </Typography>
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <TrainTwoToneIcon sx={{ fontSize: 40 }} />
+                    <Typography variant="h6">
+                      {" "}
+                      Coach No: {coach.coachNumber}
+                    </Typography>
+                  </Box>
                   <SeatLayout
                     seats={coach.seats}
                     bookedSeats={coach.alreadyBookedSeats}
@@ -127,9 +182,9 @@ export default function SeatSelection() {
                 </Box>
               ))}
             </Box>
-          </Box>
+          {/* </Box> */}
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} lg={6} mx={{ xs: 0, sm: 10, md: 0 }}>
           <TripSummary
             selectedClass={selectedClass}
             fromStop={fromStop}
@@ -138,24 +193,25 @@ export default function SeatSelection() {
             selectedSeatCount={selectedSeatIds.length}
             trainName={schedule.trainRef.name}
           />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: { xs: "center", lg: "flex-end" },
+            }}
+          >
+            <Button
+              variant="contained"
+              color="secondary"
+              // sx={{ my: "5px", mx: "40px" }} // adjusted marginLeft to marginRight
+              onClick={goToCheckOut}
+              sx={{ mt: 2 , mx:8 }}
+            >
+              CheckOut
+            </Button>
+          </Box>
         </Grid>
       </Grid>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
-      >
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ my: "5px", mx: "70px" }} // adjusted marginLeft to marginRight
-          onClick={goToCheckOut}
-        >
-          CheckOut
-        </Button>
-      </Box>
-    </>
+    </Container>
   );
 }

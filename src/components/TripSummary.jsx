@@ -1,96 +1,41 @@
-// //trip summary
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Divider, Grid, Paper } from "@mui/material";
+import { red } from "@mui/material/colors";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import TrainIcon from "@mui/icons-material/Train";
+import getTimeDiffInMins from "../utils/timeDuration";
+import axios from "axios";
 
-// import React from 'react';
-// import { Box, Typography, Divider, Button, Grid, Paper } from '@mui/material';
-// import LocationOnIcon from '@mui/icons-material/LocationOn';
-// import getTimeDiffInMins from '../utils/timeDuration';
+export default function TripSummary({
+  selectedClass,
+  fromStop,
+  toStop,
+  date,
+  selectedSeatCount,
+  trainName,
+  holdTime,
+}) {
+  const [remainingTime, setRemainingTime] = useState("");
+  const [fromStopName, setFromStopName] = useState("");
+  const [toStopName, setToStopName] = useState("");
 
-// const TripSummary = ({ selectedClass, fromStop, toStop, date, selectedSeatCount,trainName,holdTime }) => {
-//   return (
-//     <Paper elevation={3} sx={{ width: '500px', margin: '40px auto', padding: '20px' }}>
-//       <Typography variant="h5" align="center" gutterBottom>
-//         Trip Summary
-//       </Typography>
-//       <Divider style={{ margin: '20px 0' }} />
-      
-//       <Grid container spacing={2} justifyContent="center" alignItems="center">
-//         <Grid item xs={12} textAlign="center">
-//             <Typography variant="h6" gutterBottom>
-//                 {trainName}
-//             </Typography>
-//         </Grid>
-//         <Grid item xs={4} textAlign="center">
-//           <Typography variant="body1" gutterBottom>
-//             {fromStop.departureTime}
-//           </Typography>
-//           <LocationOnIcon sx={{ color: '#207497', marginTop: '5px' }} />
-//           <Typography variant="body2">{fromStop.stationRef.name}</Typography>
-//         </Grid>
-//         <Grid item xs={4} textAlign="center">
-//           <Divider orientation="vertical" sx={{ height: '2px', backgroundColor: 'black' }} />
-//         </Grid>
-//         <Grid item xs={4} textAlign="center">
-//           <Typography variant="body1" gutterBottom>
-//             {toStop.arrivalTime}
-//           </Typography>
-//           <LocationOnIcon sx={{ color: '#D32F2F', marginTop: '5px' }} />
-//           <Typography variant="body2">{toStop.stationRef.name}</Typography>
-//         </Grid>
-//         {holdTime && (
-//           <Grid item xs={12} textAlign="center">
-//             <Typography variant="body1" gutterBottom>
-//               Your booking will be held for {holdTime} minutes.
-//             </Typography>
-//           </Grid>
-//         )}
-//       </Grid>
-
-//       <Box sx={{ textAlign: 'center', marginTop: '20px' }}>
-//         <Typography variant="body1" gutterBottom>
-//           <strong>Date:</strong> {date}
-//         </Typography>
-//         <Typography variant="body1" gutterBottom>
-//           <strong>Time Duration:</strong> {getTimeDiffInMins(fromStop.departureTime, toStop.arrivalTime)}
-//         </Typography>
-//         {/* <Typography variant="body1" gutterBottom>
-//           <strong>Seats Booked:</strong> {selectedSeats.join(', ')}
-//         </Typography> */}
-//         <Divider style={{ margin: '20px 0' }} />
-//         <Box>
-//           <Typography variant="body1" gutterBottom>
-//             <strong>Class: </strong>
-//             <span style={{ color: '#207497', fontWeight: 'bold' }}>{selectedClass.name}</span>
-//           </Typography>
-//           <Typography variant="body1" gutterBottom>
-//             <strong>Total Seats: </strong>
-//             <span style={{ color: '#207497', fontWeight: 'bold' }}>{selectedSeatCount}</span>
-//           </Typography>
-//           <Typography variant="body1" gutterBottom>
-//             <strong>Fare Calculation: </strong>
-//             <span style={{ color: '#207497', fontWeight: 'bold' }}>{toStop.price - fromStop.price} x {selectedSeatCount}</span>
-//           </Typography>
-//           <Typography variant="body1" gutterBottom>
-//             <strong>Total: </strong>
-//             <span style={{ color: '#207497', fontWeight: 'bold' }}>{selectedSeatCount * selectedClass.priceFactor * (toStop.price - fromStop.price)} LKR</span>
-//           </Typography>
-//         </Box>
-//       </Box>
-      
-//     </Paper>
-//   );
-// };
-
-// export default TripSummary;
-
-
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, Divider, Grid, Paper } from '@mui/material';
-import { red } from '@mui/material/colors';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import getTimeDiffInMins from '../utils/timeDuration';
-
-const TripSummary = ({ selectedClass, fromStop, toStop, date, selectedSeatCount, trainName, holdTime }) => {
-  const [remainingTime, setRemainingTime] = useState('');
+  useEffect(() => {
+    const fetchStops = async () => {
+      try {
+        const fromStopResponse = await axios.get(
+          `/api/stationName/${fromStop.stationRef}`
+        );
+        const toStopResponse = await axios.get(
+          `/api/stationName/${toStop.stationRef}`
+        );
+        setFromStopName(fromStopResponse.data.name);
+        setToStopName(toStopResponse.data.name);
+      } catch (error) {
+        console.error("Failed to fetch stops:", error);
+      }
+    };
+    fetchStops();
+  }, [fromStop.stationRef, toStop.stationRef]);
 
   // Countdown timer for booking hold time
   useEffect(() => {
@@ -103,7 +48,7 @@ const TripSummary = ({ selectedClass, fromStop, toStop, date, selectedSeatCount,
       setRemainingTime(`${minutes} minutes ${seconds} seconds`);
       if (timeLeft < 0) {
         clearInterval(interval);
-        setRemainingTime('Expired');
+        setRemainingTime("Expired");
       }
     };
 
@@ -113,75 +58,100 @@ const TripSummary = ({ selectedClass, fromStop, toStop, date, selectedSeatCount,
   }, [holdTime]);
 
   return (
-    <Paper elevation={3} sx={{ width: '500px', margin: '40px auto', padding: '20px' }}>
+    <Paper
+      elevation={3}
+      sx={{
+        width: { xs: "100%", md: "500px" },
+        padding: "20px",
+      }}
+    >
       <Typography variant="h5" align="center" gutterBottom>
         Trip Summary
       </Typography>
-      <Divider style={{ margin: '20px 0' }} />
-      
-      <Grid container spacing={2} justifyContent="center" alignItems="center">
+      <Divider style={{ margin: "20px 0" }} />
+
+      <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={12} textAlign="center">
-            <Typography variant="h6" gutterBottom>
-                {trainName}
-            </Typography>
+          <Box sx={{display: "flex", alignItems: "center", mb: 2 ,justifyContent:'center'}}>
+            <TrainIcon sx={{ fontSize: 35,mr:0.5 }} />
+          <Typography variant="h6" >
+            {trainName}
+          </Typography>
+          </Box>
         </Grid>
-        <Grid item xs={4} textAlign="center">
+        <Grid item xs={4} textAlign="center" sx={{ alignItems: "flex-end" }}>
+          <Box sx={{ justifyContent: "flex-end" }}>
           <Typography variant="body1" gutterBottom>
             {fromStop.departureTime}
           </Typography>
-          <LocationOnIcon sx={{ color: '#207497', marginTop: '5px' }} />
-          <Typography variant="body2">{fromStop.stationRef.name}</Typography>
+          <LocationOnIcon sx={{ color: "#207497" }} />
+          <Typography variant="body2">{fromStopName}</Typography>
+          </Box>
         </Grid>
-        <Grid item xs={4} textAlign="center">
-          <Divider orientation="vertical" sx={{ height: '2px', backgroundColor: 'black' }} />
+        <Grid item xs={4}>
+          <Divider
+            // orientation="vertical"
+            sx={{ height: "2px", backgroundColor: "black" }}
+          />
         </Grid>
         <Grid item xs={4} textAlign="center">
           <Typography variant="body1" gutterBottom>
             {toStop.arrivalTime}
           </Typography>
-          <LocationOnIcon sx={{ color: '#D32F2F', marginTop: '5px' }} />
-          <Typography variant="body2">{toStop.stationRef.name}</Typography>
+          <LocationOnIcon sx={{ color: "#D32F2F", marginTop: "5px" }} />
+          <Typography variant="body2">{toStopName}</Typography>
         </Grid>
         {holdTime && (
           <Grid item xs={12} textAlign="center">
             <Typography variant="body1" gutterBottom color={red[400]}>
-            {remainingTime !== 'Expired' ? `Your booking will be held for ${remainingTime}.` : 'Your booking has expired.'}
+              {remainingTime !== "Expired"
+                ? `Your booking will be held for ${remainingTime}.`
+                : "Your booking has expired."}
             </Typography>
           </Grid>
         )}
       </Grid>
 
-      <Box sx={{ textAlign: 'center', marginTop: '20px' }}>
-        <Typography variant="body1" gutterBottom>
+      <Box sx={{ textAlign: "center", marginTop: "20px" }}>
+        <Typography variant="body1" sx={{mb:0.7}}>
           <strong>Date:</strong> {date}
         </Typography>
-        <Typography variant="body1" gutterBottom>
-          <strong>Time Duration:</strong> {getTimeDiffInMins(fromStop.departureTime, toStop.arrivalTime)}
+        <Typography variant="body1" >
+          <strong>Journey Duration:</strong>{" "}
+          {getTimeDiffInMins(fromStop.departureTime, toStop.arrivalTime)}
         </Typography>
-        <Divider style={{ margin: '20px 0' }} />
+        <Divider style={{ margin: "20px 0" }} />
         <Box>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1"  sx={{mb:0.7}}>
             <strong>Class: </strong>
-            <span style={{ color: '#207497', fontWeight: 'bold' }}>{selectedClass.name}</span>
+            <span style={{ color: "#207497", fontWeight: "bold" }}>
+              {selectedClass.name}
+            </span>
           </Typography>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1"  sx={{mb:0.7}}>
             <strong>Total Seats: </strong>
-            <span style={{ color: '#207497', fontWeight: 'bold' }}>{selectedSeatCount}</span>
+            <span style={{ color: "#207497", fontWeight: "bold" }}>
+              {selectedSeatCount}
+            </span>
           </Typography>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1"  sx={{mb:0.7}}>
             <strong>Fare Calculation: </strong>
-            <span style={{ color: '#207497', fontWeight: 'bold' }}>{selectedClass.priceFactor * (toStop.price - fromStop.price)} x {selectedSeatCount}</span>
+            <span style={{ color: "#207497", fontWeight: "bold" }}>
+              {selectedClass.priceFactor * (toStop.price - fromStop.price)} x{" "}
+              {selectedSeatCount}
+            </span>
           </Typography>
           <Typography variant="body1" gutterBottom>
             <strong>Total: </strong>
-            <span style={{ color: '#207497', fontWeight: 'bold' }}>LKR {selectedSeatCount * selectedClass.priceFactor * (toStop.price - fromStop.price)}</span>
+            <span style={{ color: "#207497", fontWeight: "bold" }}>
+              LKR{" "}
+              {selectedSeatCount *
+                selectedClass.priceFactor *
+                (toStop.price - fromStop.price)}
+            </span>
           </Typography>
         </Box>
       </Box>
-      
     </Paper>
   );
-};
-
-export default TripSummary;
-
+}

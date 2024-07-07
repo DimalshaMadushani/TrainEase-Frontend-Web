@@ -74,28 +74,35 @@ export default function CheckOut() {
 
   return (
     <Container maxWidth="lg">
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={12}>
-          <Card sx={{ p: 2, mb: 2 }}>
-            <CardContent>
-              <Typography variant="subtitle1" gutterBottom>
+      <Grid container spacing={3} sx={{ mb: 2 }}>
+        <Grid item xs={12}>
+          <Card
+            sx={{
+              mb: 1,
+              mt: 2,
+              mx: "auto", // Center the card horizontally
+              width: { xs: "100%", md: "80%", lg: "60%" }, // Adjust width based on screen size
+            }}
+          >
+            <CardContent sx={{ textAlign: "center", pb: 0 }}>
+              <Typography variant="subtitle1">
                 <Box
                   component="span"
                   sx={{
                     display: "inline-flex",
                     alignItems: "center",
-                    padding: "0.5px",
+                    justifyContent: "center", // Center the content
                   }}
                 >
-                  <Box component="span" sx={{ mr: 1, color: "gray" }}>
+                  <Box sx={{ mr: 1, color: "gray" }}>
                     <Box
                       component="img"
                       src={SecurityLock}
                       alt="Security Lock"
-                      sx={{ height: 20 }}
+                      sx={{ height: 20,mt:0.5 }}
                     />
                   </Box>
-                  <Box component="span" sx={{ fontWeight: "bold" }}>
+                  <Box sx={{ fontWeight: "bold" }}>
                     Secured payment - All information is fully encrypted, secure
                     and protected.
                   </Box>
@@ -113,7 +120,7 @@ export default function CheckOut() {
           component="form"
           onSubmit={handleConfirmBooking}
         >
-          <Card sx={{ p: 2 }}>
+          <Card sx={{ p: 2, pb: 0 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Payment method
@@ -170,6 +177,7 @@ export default function CheckOut() {
                 variant="outlined"
                 sx={{ mb: 2 }}
                 placeholder="**** **** **** ****"
+                required
                 InputProps={{
                   endAdornment: (
                     <Box
@@ -187,6 +195,7 @@ export default function CheckOut() {
                 variant="outlined"
                 sx={{ mb: 2 }}
                 placeholder="R.M. Rathnayake"
+                required
               />
               <Box sx={{ display: "flex", gap: 2 }}>
                 <TextField
@@ -194,12 +203,14 @@ export default function CheckOut() {
                   label="Expiry date"
                   variant="outlined"
                   placeholder="MM/YY"
+                  required
                 />
                 <TextField
                   fullWidth
                   label="Security code"
                   variant="outlined"
                   placeholder="CVC or CVV"
+                  required
                   InputProps={{
                     endAdornment: (
                       <Box
@@ -214,10 +225,10 @@ export default function CheckOut() {
               </Box>
               <Button
                 variant="contained"
-                color="primary"
+                color="secondary"
                 type="submit"
                 disabled={isExpired}
-                sx={{ mt: "10px" }}
+                sx={{ mt: 3.8 }}
               >
                 Confirm Reservation
               </Button>
