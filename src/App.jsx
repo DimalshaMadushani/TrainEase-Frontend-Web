@@ -13,14 +13,18 @@ import Profile from "./pages/Profile";
 import SeatSelection from "./pages/SeatSelection";
 import CheckOut from "./pages/CheckOut";
 import EditProfile from "./pages/EditProfile";
+import Footer from "./components/Footer";
+import theme from "./utils/theme";
+import { ThemeProvider } from "@mui/material/styles";
 
 function App() {
   return (
+    <ThemeProvider theme={theme}>
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <CssBaseline />
       <BrowserRouter>
         <Header />
-        <Box sx={{ flex: "1 0 auto", backgroundColor: "#f5f5f5" }}>
+        <Box sx={{ flex: "1 0 auto", backgroundColor: "#F4F6F6" }}>
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/schedules" element={<Schedules />} />
@@ -33,9 +37,10 @@ function App() {
             <Route path="/checkout" element={<CheckOut />} />
           </Routes>
         </Box>
-        {/* <Footer /> */}
+        <Footer />
       </BrowserRouter>
     </Box>
+    </ThemeProvider>
   );
 }
 
