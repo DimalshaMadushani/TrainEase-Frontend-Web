@@ -78,7 +78,7 @@ export default function TrainDetails() {
   };
 
   return (
-    <Box sx={{ padding: 4 }}>
+    <Box sx={{ padding: 4, mx:5 }}>
       <Typography
         variant="h4"
         component="h1"
@@ -130,7 +130,7 @@ export default function TrainDetails() {
                 height: "50px",
                 backgroundColor: "black",
                 marginRight: 1,
-                marginLeft: 7.5,
+                marginLeft: 11,
               }}
             />
             <Typography variant="body1" sx={{ marginLeft: 2.5 }}>
@@ -150,13 +150,14 @@ export default function TrainDetails() {
       </Box>
 
       <Divider />
-      <Grid container spacing={2} sx={{ marginTop: 2 }}>
+      <Grid container spacing={4} sx={{ marginTop: 2 }}>
+        <Box></Box>
         {trainDetails.coachTypes.map((classOption) => (
-          <Grid item xs={12} sm={4} key={classOption._id}>
+          <Grid item xs={12} lg={4} key={classOption._id} >
             <Paper
               elevation={3}
               sx={{
-                padding: 2,
+                padding: 3,
                 border:
                   selectedClass && selectedClass._id === classOption._id
                     ? "2px solid #1976D2"
@@ -182,7 +183,7 @@ export default function TrainDetails() {
                   marginBottom: 2,
                 }}
               >
-                <Typography variant="h6" component="h2">
+                <Typography variant="h6" component="h2" color={"primary" } sx={{fontWeight:'bold'}}>
                   {classOption.name}
                 </Typography>
                 <Typography
@@ -206,11 +207,12 @@ export default function TrainDetails() {
             </Paper>
           </Grid>
         ))}
+        
       </Grid>
       <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 3 }}>
         <Button
           variant="contained"
-          color="primary"
+          color="secondary"
           sx={{ minWidth: 150 }}
           disabled={!selectedClass} // Disable the button if no class is selected
           onClick={handleSelectSeats}
