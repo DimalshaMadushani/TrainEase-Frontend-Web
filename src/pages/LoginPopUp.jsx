@@ -11,7 +11,7 @@ import {
   Alert,
 } from "@mui/material";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // For navigation
+import { Link, useNavigate } from "react-router-dom"; // For navigation
 import { useDispatch, useSelector } from "react-redux";
 import {loginStart,loginSuccess,loginFailure} from "../redux/user/userSlice";
 
@@ -47,10 +47,6 @@ const LoginPopUp = ({ onClose }) => {
     
   };
 
-  const handleGoToRegister = () => {
-    navigate("/register"); // Assumes '/register' is the route for your registration page
-  };
-
   return (
     <Dialog open onClose={onClose}>
       <DialogTitle>Login</DialogTitle>
@@ -73,11 +69,9 @@ const LoginPopUp = ({ onClose }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
         {error && <Alert severity="error">{error}</Alert>}
-        <Box textAlign="center" marginTop="20px">
-          <Typography variant="body2">Don't you have an account?</Typography>
-          <Button color="primary" onClick={handleGoToRegister}>
-            Register here
-          </Button>
+        <Box textAlign="center" marginTop="20px" display="flex">
+          <Typography variant="body1" mr={1}>Don't you have an account?</Typography>
+          <Link to="/register" style={{ textDecoration: "none"}}>Register</Link>
         </Box>
       </DialogContent>
       <DialogActions>
