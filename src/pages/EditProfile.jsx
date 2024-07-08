@@ -36,6 +36,7 @@ export default function EditProfile() {
     const fetchProfile = async () => {
       try {
         const response = await axios.get("/api/user/getProfile");
+        console.log("Profile fetched", response.data);
         setFormData({
           phone: response.data.phone,
           username: response.data.username,
