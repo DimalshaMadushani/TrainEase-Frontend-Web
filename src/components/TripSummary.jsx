@@ -14,6 +14,7 @@ export default function TripSummary({
   selectedSeatCount,
   trainName,
   holdTime,
+  isSuccessful,
 }) {
   const [remainingTime, setRemainingTime] = useState("");
   const [fromStopName, setFromStopName] = useState("");
@@ -101,7 +102,7 @@ export default function TripSummary({
           <LocationOnIcon sx={{ color: "#D32F2F", marginTop: "5px" }} />
           <Typography variant="body2">{toStopName}</Typography>
         </Grid>
-        {holdTime && (
+        {!isSuccessful && holdTime && (
           <Grid item xs={12} textAlign="center">
             <Typography variant="body1" gutterBottom color={red[400]}>
               {remainingTime !== "Expired"

@@ -27,6 +27,7 @@ import PaymentSuccessPopup from "../components/PaymentSuccessPopup";
 export default function CheckOut() {
   const [open, setOpen] = useState(false);
   const [isExpired, setIsExpired] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const location = useLocation();
   const {
     selectedClass,
@@ -70,7 +71,11 @@ export default function CheckOut() {
     }
   };
 
-  const handleClose = () => setOpen(false);
+  const handleClose = () =>{
+    setOpen(false);
+    setIsSuccess(true);
+  } 
+    
 
   return (
     <Container maxWidth="lg">
@@ -227,7 +232,7 @@ export default function CheckOut() {
                 variant="contained"
                 color="secondary"
                 type="submit"
-                disabled={isExpired}
+                disabled={isExpired || isSuccess}
                 sx={{ mt: 3.8 }}
               >
                 Confirm Reservation
@@ -245,6 +250,7 @@ export default function CheckOut() {
             selectedSeatCount={selectedSeatCount}
             trainName={trainName}
             holdTime={expireTime}
+            isSuccessful={isSuccess}
           />
         </Grid>
       </Grid>
