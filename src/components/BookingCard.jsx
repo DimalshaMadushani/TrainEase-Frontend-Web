@@ -29,23 +29,23 @@ export default function BookingCard({ booking }) {
       }}
     >
       <Grid container>
-        <Grid item xs={4}>
-          <Typography variant="body1">Booking ID: {booking._id}</Typography>
-          <Typography variant="body2">
-            Date: {new Date(booking.date).toLocaleDateString()}
+        <Grid item xs={12} md={4}>
+          <Typography variant="body1" > <b>Booking ID:</b> {booking._id}</Typography>
+          <Typography variant="body1">
+            <b>Date: </b>{new Date(booking.date).toLocaleDateString()}
           </Typography>
-          <Typography variant="body2">
-            Pax: {booking.seats.length}{" "}
+          <Typography variant="body1">
+            <b>Pax: </b> {booking.seats.length}{" "}
             {booking.seats.length > 1 ? "seats" : "seat"}
           </Typography>
-          <Typography variant="body2">
-            Total Amount: {booking.totalAmount} LKR
+          <Typography variant="body1">
+            <b>Total Amount: </b>{booking.totalAmount} LKR
           </Typography>
         </Grid>
-        <Grid item xs={4} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-            <Box display="flex">
+        <Grid item xs={12} md={4} sx={{ display: "flex", flexDirection: "column", justifyContent: {md: "center"}, alignItems: {md: "center"} }}>
+            <Box display="flex" alignItems="center" mb={1}>
                 <TrainIcon sx={{ marginRight: 1, color: "#207497" }} />
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6">
                     {booking.scheduleRef.trainRef.name}
                 </Typography>
             </Box>
@@ -60,9 +60,9 @@ export default function BookingCard({ booking }) {
             </Box>
           
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           {(
-            <Box sx={{display:'flex',justifyContent:'flex-end'}}>
+            <Box sx={{display:'flex',justifyContent:{md: 'flex-end'}}}>
               <Button
                 variant="contained"
                 color="secondary"
