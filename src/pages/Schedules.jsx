@@ -1,13 +1,16 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Card, CardContent, Typography, Dialog } from '@mui/material';
+import { Container, Grid, Card, CardContent, Typography, Dialog,Box,Paper } from '@mui/material';
 import { useLocation } from 'react-router-dom'; // For getting the data from the previous page, this is a hook
 import LoginPopUp from './LoginPopUp';
 import SearchBar from '../components/SearchBar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import TrainIcon from '@mui/icons-material/Train';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 export default function Schedules()  {
@@ -96,31 +99,53 @@ const handleSearch = async () => {
   }
 };
 
+const theme = useTheme();
+  const isMediumOrBelow = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Container>
-      <SearchBar
-        stations={stations}
-        onSearch={handleSearch} // You need to implement or adjust handleSearch for Schedules page
-        setFrom={setFrom}
-        setTo={setTo}
-        setDate={setDate}
-        initialSearchParams={{ from, to, date }}
-      />
-      <Grid container spacing={2} style={{ marginTop: '20px' }}>
-        {schedules.map((schedule, index) => (
-          <Grid item xs={12} key={index}>
-            {/* <Card onClick={handleOpen}> */}
-            <Card onClick={() => handleOpen(schedule)} key={index}>
-              <CardContent>
-                <Typography variant="h6">{schedule.fromStop.departureTime} ➔ {schedule.toStop.arrivalTime}</Typography>
-                <Typography variant="body2" sx={{my:2}}>{schedule.schedule.trainRef.name}</Typography>
-                <Typography variant="body2">Price: Rs{schedule.toStop.price}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      <Box sx={{my:3}}>
+        <SearchBar
+          stations={stations}
+          onSearch={handleSearch} // You need to implement or adjust handleSearch for Schedules page
+          setFrom={setFrom}
+          setTo={setTo}
+          setDate={setDate}
+          initialSearchParams={{ from, to, date }}
+        />
+      </Box>
+      
+      <Grid container spacing={2} style={{ marginTop: '20px' ,mb:2 }}>
+      {schedules.map((schedule) => (
+        <Grid item xs={12} key={schedule._id}>
+          <Card onClick={() => handleOpen(schedule)}>
+            <CardContent>
+              <Grid container alignItems="center">
+                <Grid item xs={4}>
+                  <Box display="flex" alignItems="center">
+                    <TrainIcon />
+                    <Typography variant="h6" sx={{ ml: 1, fontSize: isMediumOrBelow ? '1rem' : '1.25rem' }}>
+                      {schedule.schedule.trainRef.name}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={4} textAlign="center">
+                  <Typography variant="h6" sx={{ fontSize: isMediumOrBelow ? '1rem' : '1.25rem' }}>
+                    {schedule.fromStop.departureTime} ➔ {schedule.toStop.arrivalTime}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4} textAlign="right" display="flex" justifyContent="right">
+                  <Paper sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', width: 'fit-content', backgroundColor: '#F4F6F6', boxShadow: 2, borderRadius: 1 }}>
+                    <Typography variant="body2" sx={{ fontSize: isMediumOrBelow ? '0.5rem' : '0.75rem' }}>from</Typography>
+                    <Typography variant="h6" sx={{ fontSize: isMediumOrBelow ? '1rem' : '1.25rem' }}>LKR {schedule.toStop.price}</Typography>
+                  </Paper>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
        
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
         <LoginPopUp onClose={handleClose} />
