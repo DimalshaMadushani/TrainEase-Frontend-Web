@@ -14,6 +14,8 @@ import SeatSelection from "./pages/SeatSelection";
 import CheckOut from "./pages/CheckOut";
 import EditProfile from "./pages/EditProfile";
 import Footer from "./components/Footer";
+import AboutUs from "./pages/AboutUs";
+import PrivateRoute from "./components/PrivateRoute";
 import theme from "./utils/theme";
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -27,14 +29,19 @@ function App() {
         <Box sx={{ flex: "1 0 auto", backgroundColor: "#F4F6F6" }}>
           <Routes>
             <Route path="/home" element={<Home />} />
+            <Route path="/about-us" element={<AboutUs />} />
             <Route path="/schedules" element={<Schedules />} />
-            <Route path="/train-details" element={<TrainDetails />} />
-            <Route path="/seat-selection" element={<SeatSelection />} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/edit-profile" element={<EditProfile />} />
-            <Route path="/checkout" element={<CheckOut />} />
+            
+            <Route  element={<PrivateRoute />} >
+              <Route path="/train-details" element={<TrainDetails />} />
+              <Route path="/seat-selection" element={<SeatSelection />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/checkout" element={<CheckOut />} />
+            </Route>
           </Routes>
         </Box>
         <Footer />

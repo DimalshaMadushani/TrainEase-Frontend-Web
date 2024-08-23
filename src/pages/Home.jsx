@@ -18,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchStations() {
       try {
-        const response = await axios.get("/api/stations");
+        const response = await axios.get("/api/search/stations");
         if (response.status === 200) {
           const resStations = response.data.map((station) => ({
             label: station.name,
@@ -46,7 +46,7 @@ export default function Home() {
       return;
     }
     try {
-      const response = await axios.get(`/api/schedules`, {
+      const response = await axios.get(`/api/search/schedules`, {
         params: { fromName: from, toName: to, date: date },
       });
       if (response.status === 200) {

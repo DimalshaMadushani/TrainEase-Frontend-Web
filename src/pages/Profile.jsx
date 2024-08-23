@@ -32,7 +32,7 @@ export default function Profile() {
 
   const handleSignout = async () => {
     try {
-      await axios.get("/api/logout");
+      await axios.get("/api/user/logout");
       navigate("/login");
     } catch (error) {
       console.error("Failed to sign out:", error);

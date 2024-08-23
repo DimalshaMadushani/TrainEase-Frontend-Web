@@ -25,6 +25,7 @@ export default function SeatSelection() {
   const [selectedSeatIds, setSelectedSeatIds] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const { selectedClass, fromStop, toStop, date, schedule } = location.state;
+  // console.log(location.state)
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   console.log("selected Seats:", selectedSeatIds);
@@ -42,7 +43,7 @@ export default function SeatSelection() {
   useEffect(() => {
     const fetchSeats = async () => {
       try {
-        const response = await axios.get("/api/coach-details", {
+        const response = await axios.get("/api/search/coach-details", {
           params: {
             date,
             fromStopId: fromStop._id,
@@ -66,7 +67,7 @@ export default function SeatSelection() {
       setOpenSnackbar(true);
       return;
     } else {
-      const response = await axios.post("/api/holdSeats", {
+      const response = await axios.post("/api/booking/holdSeats", {
         userId: currentUser._id,
         scheduleId: schedule._id,
         fromStopId: fromStop._id,

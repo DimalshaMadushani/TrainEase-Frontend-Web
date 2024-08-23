@@ -57,7 +57,7 @@ function Header() {
             ) : (
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', height: '80px' }}>
                 <Button color="inherit" href="/home">Home</Button>
-                <Button color="inherit" href="#aboutus">About us</Button>
+                <Button color="inherit" href="/about-us">About us</Button>
                 {currentUser ? (
                   <Button color="inherit" href="/profile">Profile</Button>
                 ) : (

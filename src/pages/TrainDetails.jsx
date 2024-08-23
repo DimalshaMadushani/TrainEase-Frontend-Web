@@ -33,7 +33,7 @@ export default function TrainDetails() {
         const scheduleId = schedule._id;
         const fromStopId = fromStop._id;
         const toStopId = toStop._id;
-        const response = await axios.get("/api/train-details", {
+        const response = await axios.get("/api/search/train-details", {
           params: { scheduleId, fromStopId, toStopId },
         });
         setTrainDetails(response.data);

@@ -30,7 +30,7 @@ const LoginPopUp = ({ onClose }) => {
     console.log("Logging in...");
     dispatch(loginStart());
     try {
-      const response = await axios.post("/api/login", {
+      const response = await axios.post("/api/user/login", {
         username,
         password,
       });

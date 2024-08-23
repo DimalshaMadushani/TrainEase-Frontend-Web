@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Dialog,
@@ -25,6 +26,7 @@ import TripSummary from "../components/TripSummary";
 import PaymentSuccessPopup from "../components/PaymentSuccessPopup";
 
 export default function CheckOut() {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [isExpired, setIsExpired] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -61,7 +63,7 @@ export default function CheckOut() {
     event.preventDefault(); // Prevent the default form submission
     if (!isExpired) {
       try {
-        const response = await axios.get(`/api/confirmBooking/${bookingId}`);
+        const response = await axios.get(`/api/booking/confirmBooking/${bookingId}`);
         console.log("Booking confirmation response:", response.data);
         setOpen(true); // Open the popup on successful booking
       } catch (error) {
@@ -74,6 +76,7 @@ export default function CheckOut() {
   const handleClose = () =>{
     setOpen(false);
     setIsSuccess(true);
+    navigate('/profile');
   } 
     
 

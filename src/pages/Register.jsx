@@ -41,7 +41,7 @@ function Register() {
     console.log("Registering...");
     dispatch(registerStart());
     try {
-      const response = await axios.post("/api/register", formData);
+      const response = await axios.post("/api/user/register", formData);
       console.log("Response:", response);
       dispatch(registerSuccess(response.data));
       navigate("/home");

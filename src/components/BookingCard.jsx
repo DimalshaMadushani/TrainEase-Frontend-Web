@@ -14,7 +14,10 @@ export default function BookingCard({ booking }) {
   const handleCancelBooking = async (bookingId) => {
     try{
         const response = await axios.delete(`/api/user/cancelBooking/${bookingId}`);
-        console.log(response.data);
+        if(response.status === 200){
+            alert("Booking cancelled successfully");
+            window.location.reload();
+        }
     }catch(error){
         console.error("Failed to cancel booking:", error);
     }
