@@ -1,36 +1,292 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  Dialog,
-  Container,
-  Typography,
-  Card,
-  CardContent,
-  TextField,
-  Button,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Divider,
-  Grid,
-} from "@mui/material";
-import VisaIcon from "../assets/visa-svgrepo-com.svg";
-import MasterCardIcon from "../assets/mastercard-full-svgrepo-com.svg";
-import AmericanExpressIcon from "../assets/american-express-svgrepo-com.svg";
-import PadlockIcon from "../assets/icons8-lock.svg";
-import SecurityLock from "../assets/icons8-security-lock-50.png";
-import { useLocation } from "react-router-dom";
+// import React, { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+// import {
+//   Box,
+//   Dialog,
+//   Container,
+//   Typography,
+//   Card,
+//   CardContent,
+//   TextField,
+//   Button,
+//   RadioGroup,
+//   FormControlLabel,
+//   Radio,
+//   Divider,
+//   Grid,
+// } from "@mui/material";
+// import VisaIcon from "../assets/visa-svgrepo-com.svg";
+// import MasterCardIcon from "../assets/mastercard-full-svgrepo-com.svg";
+// import AmericanExpressIcon from "../assets/american-express-svgrepo-com.svg";
+// import PadlockIcon from "../assets/icons8-lock.svg";
+// import SecurityLock from "../assets/icons8-security-lock-50.png";
+// import { useLocation } from "react-router-dom";
+// import axios from "axios";
+// import TripSummary from "../components/TripSummary";
+// import PaymentSuccessPopup from "../components/PaymentSuccessPopup";
+
+// export default function CheckOut() {
+//   const navigate = useNavigate();
+//   const [open, setOpen] = useState(false);
+//   const [isExpired, setIsExpired] = useState(false);
+//   const [isSuccess, setIsSuccess] = useState(false);
+//   const location = useLocation();
+//   const {
+//     selectedClass,
+//     fromStop,
+//     toStop,
+//     date,
+//     selectedSeatCount,
+//     trainName,
+//     selectedSeats,
+//     schedule,
+//     bookingId,
+//     expireTime,
+//   } = location.state;
+
+//   useEffect(() => {
+//     const checkExpiry = () => {
+//       const now = new Date();
+//       const expiry = new Date(expireTime);
+//       if (now >= expiry) {
+//         setIsExpired(true);
+//       }
+//     };
+
+//     const timer = setInterval(checkExpiry, 1000); // Check every second
+//     checkExpiry(); // Check immediately on component mount
+
+//     return () => clearInterval(timer); // Clean up on component unmount
+//   }, [expireTime]);
+
+//   const handleConfirmBooking = async (event) => {
+//     event.preventDefault(); // Prevent the default form submission
+//     if (!isExpired) {
+//       try {
+//         const response = await axios.get(`/api/booking/confirmBooking/${bookingId}`);
+//         console.log("Booking confirmation response:", response.data);
+//         setOpen(true); // Open the popup on successful booking
+//       } catch (error) {
+//         console.error("Failed to confirm booking:", error);
+//         alert("Failed to confirm booking, please try again."); // Inform the user about the error
+//       }
+//     }
+//   };
+
+//   const handleClose = () =>{
+//     setOpen(false);
+//     setIsSuccess(true);
+//     navigate('/profile');
+//   } 
+    
+
+//   return (
+//     <Container maxWidth="lg">
+//       <Grid container spacing={3} sx={{ mb: 2 }}>
+//         <Grid item xs={12}>
+//           <Card
+//             sx={{
+//               mb: 1,
+//               mt: 2,
+//               mx: "auto", // Center the card horizontally
+//               width: { xs: "100%", md: "80%", lg: "60%" }, // Adjust width based on screen size
+//             }}
+//           >
+//             <CardContent sx={{ textAlign: "center", pb: 0 }}>
+//               <Typography variant="subtitle1">
+//                 <Box
+//                   component="span"
+//                   sx={{
+//                     display: "inline-flex",
+//                     alignItems: "center",
+//                     justifyContent: "center", // Center the content
+//                   }}
+//                 >
+//                   <Box sx={{ mr: 1, color: "gray" }}>
+//                     <Box
+//                       component="img"
+//                       src={SecurityLock}
+//                       alt="Security Lock"
+//                       sx={{ height: 20,mt:0.5 }}
+//                     />
+//                   </Box>
+//                   <Box sx={{ fontWeight: "bold" }}>
+//                     Secured payment - All information is fully encrypted, secure
+//                     and protected.
+//                   </Box>
+//                 </Box>
+//               </Typography>
+//             </CardContent>
+//           </Card>
+//         </Grid>
+
+//         <Grid
+//           container
+//           item
+//           xs={12}
+//           md={6}
+//           component="form"
+//           onSubmit={handleConfirmBooking}
+//         >
+//           <Card sx={{ p: 2, pb: 0 }}>
+//             <CardContent>
+//               <Typography variant="h6" gutterBottom>
+//                 Payment method
+//               </Typography>
+//               <RadioGroup
+//                 defaultValue="credit-card"
+//                 sx={{ display: "flex", flexDirection: "row", gap: 2 }}
+//               >
+//                 <FormControlLabel
+//                   value="credit-card"
+//                   control={<Radio />}
+//                   label="Credit card"
+//                 />
+//                 <FormControlLabel
+//                   value="debit-card"
+//                   control={<Radio />}
+//                   label="Debit card"
+//                 />
+//               </RadioGroup>
+//               <Box
+//                 sx={{
+//                   display: "flex",
+//                   alignItems: "center",
+//                   gap: 2,
+//                   marginTop: 2,
+//                 }}
+//               >
+//                 <Box
+//                   component="img"
+//                   src={VisaIcon}
+//                   alt="Visa"
+//                   sx={{ height: 40 }}
+//                 />
+//                 <Box
+//                   component="img"
+//                   src={MasterCardIcon}
+//                   alt="MasterCard"
+//                   sx={{ height: 40 }}
+//                 />
+//                 <Box
+//                   component="img"
+//                   src={AmericanExpressIcon}
+//                   alt="American Express"
+//                   sx={{ height: 40 }}
+//                 />
+//               </Box>
+
+//               <Typography variant="h6" gutterBottom mt={2}>
+//                 Card details
+//               </Typography>
+//               <TextField
+//                 fullWidth
+//                 label="Card number"
+//                 variant="outlined"
+//                 sx={{ mb: 2 }}
+//                 placeholder="**** **** **** ****"
+//                 required
+//                 InputProps={{
+//                   endAdornment: (
+//                     <Box
+//                       component="img"
+//                       src={PadlockIcon}
+//                       alt="Padlock"
+//                       sx={{ height: 20, color: "gray" }}
+//                     />
+//                   ),
+//                 }}
+//               />
+//               <TextField
+//                 fullWidth
+//                 label="Cardholder name"
+//                 variant="outlined"
+//                 sx={{ mb: 2 }}
+//                 placeholder="R.M. Rathnayake"
+//                 required
+//               />
+//               <Box sx={{ display: "flex", gap: 2 }}>
+//                 <TextField
+//                   fullWidth
+//                   label="Expiry date"
+//                   variant="outlined"
+//                   placeholder="MM/YY"
+//                   required
+//                 />
+//                 <TextField
+//                   fullWidth
+//                   label="Security code"
+//                   variant="outlined"
+//                   placeholder="CVC or CVV"
+//                   required
+//                   InputProps={{
+//                     endAdornment: (
+//                       <Box
+//                         component="img"
+//                         src={PadlockIcon}
+//                         alt="Padlock"
+//                         sx={{ height: 20, color: "gray" }}
+//                       />
+//                     ),
+//                   }}
+//                 />
+//               </Box>
+//               <Button
+//                 variant="contained"
+//                 color="secondary"
+//                 type="submit"
+//                 disabled={isExpired || isSuccess}
+//                 sx={{ mt: 3.8 }}
+//               >
+//                 Confirm Reservation
+//               </Button>
+//             </CardContent>
+//           </Card>
+//         </Grid>
+
+//         <Grid item xs={12} md={6}>
+//           <TripSummary
+//             selectedClass={selectedClass}
+//             fromStop={fromStop}
+//             toStop={toStop}
+//             date={date}
+//             selectedSeatCount={selectedSeatCount}
+//             trainName={trainName}
+//             holdTime={expireTime}
+//             isSuccessful={isSuccess}
+//           />
+//         </Grid>
+//       </Grid>
+
+//       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+//         <PaymentSuccessPopup onClose={handleClose} />
+//       </Dialog>
+//     </Container>
+//   );
+// }
+
+
+import React, { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Box, Dialog, Container, Typography, Card, CardContent, TextField, Button, RadioGroup, FormControlLabel, Radio, Grid } from "@mui/material";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { checkoutSchema } from '../validationSchemas';
 import axios from "axios";
 import TripSummary from "../components/TripSummary";
 import PaymentSuccessPopup from "../components/PaymentSuccessPopup";
+import VisaIcon from "../assets/visa-svgrepo-com.svg";
+import MasterCardIcon from "../assets/mastercard-full-svgrepo-com.svg";
+import AmericanExpressIcon from "../assets/american-express-svgrepo-com.svg";
+
 
 export default function CheckOut() {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const [isExpired, setIsExpired] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const location = useLocation();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(checkoutSchema),
+  });
+
   const {
     selectedClass,
     fromStop,
@@ -38,11 +294,14 @@ export default function CheckOut() {
     date,
     selectedSeatCount,
     trainName,
-    selectedSeats,
     schedule,
     bookingId,
     expireTime,
   } = location.state;
+
+  const [open, setOpen] = React.useState(false);
+  const [isExpired, setIsExpired] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
   useEffect(() => {
     const checkExpiry = () => {
@@ -53,193 +312,58 @@ export default function CheckOut() {
       }
     };
 
-    const timer = setInterval(checkExpiry, 1000); // Check every second
-    checkExpiry(); // Check immediately on component mount
+    const timer = setInterval(checkExpiry, 1000);
+    checkExpiry();
 
-    return () => clearInterval(timer); // Clean up on component unmount
+    return () => clearInterval(timer);
   }, [expireTime]);
 
-  const handleConfirmBooking = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
+  const handleConfirmBooking = async (data) => {
     if (!isExpired) {
       try {
-        const response = await axios.get(`/api/booking/confirmBooking/${bookingId}`);
+        const response = await axios.post(`/api/booking/confirmBooking/${bookingId}`, data);
         console.log("Booking confirmation response:", response.data);
-        setOpen(true); // Open the popup on successful booking
+        setOpen(true);
       } catch (error) {
         console.error("Failed to confirm booking:", error);
-        alert("Failed to confirm booking, please try again."); // Inform the user about the error
+        alert("Failed to confirm booking, please try again.");
       }
     }
   };
 
-  const handleClose = () =>{
+  const handleClose = () => {
     setOpen(false);
     setIsSuccess(true);
     navigate('/profile');
-  } 
-    
+  };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ mt: 3 }}>
       <Grid container spacing={3} sx={{ mb: 2 }}>
-        <Grid item xs={12}>
-          <Card
-            sx={{
-              mb: 1,
-              mt: 2,
-              mx: "auto", // Center the card horizontally
-              width: { xs: "100%", md: "80%", lg: "60%" }, // Adjust width based on screen size
-            }}
-          >
-            <CardContent sx={{ textAlign: "center", pb: 0 }}>
-              <Typography variant="subtitle1">
-                <Box
-                  component="span"
-                  sx={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center", // Center the content
-                  }}
-                >
-                  <Box sx={{ mr: 1, color: "gray" }}>
-                    <Box
-                      component="img"
-                      src={SecurityLock}
-                      alt="Security Lock"
-                      sx={{ height: 20,mt:0.5 }}
-                    />
-                  </Box>
-                  <Box sx={{ fontWeight: "bold" }}>
-                    Secured payment - All information is fully encrypted, secure
-                    and protected.
-                  </Box>
-                </Box>
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid
-          container
-          item
-          xs={12}
-          md={6}
-          component="form"
-          onSubmit={handleConfirmBooking}
-        >
+        {/* Payment Method Card */}
+        <Grid item xs={12} md={6}>
           <Card sx={{ p: 2, pb: 0 }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Payment method
-              </Typography>
-              <RadioGroup
-                defaultValue="credit-card"
-                sx={{ display: "flex", flexDirection: "row", gap: 2 }}
-              >
-                <FormControlLabel
-                  value="credit-card"
-                  control={<Radio />}
-                  label="Credit card"
-                />
-                <FormControlLabel
-                  value="debit-card"
-                  control={<Radio />}
-                  label="Debit card"
-                />
+              <Typography variant="h6" gutterBottom>Payment method</Typography>
+              <RadioGroup defaultValue="credit-card" sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+                <FormControlLabel value="credit-card" control={<Radio />} label="Credit card" />
+                <FormControlLabel value="debit-card" control={<Radio />} label="Debit card" />
               </RadioGroup>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                  marginTop: 2,
-                }}
-              >
-                <Box
-                  component="img"
-                  src={VisaIcon}
-                  alt="Visa"
-                  sx={{ height: 40 }}
-                />
-                <Box
-                  component="img"
-                  src={MasterCardIcon}
-                  alt="MasterCard"
-                  sx={{ height: 40 }}
-                />
-                <Box
-                  component="img"
-                  src={AmericanExpressIcon}
-                  alt="American Express"
-                  sx={{ height: 40 }}
-                />
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2, marginTop: 2 }}>
+                <Box component="img" src={VisaIcon} alt="Visa" sx={{ height: 40 }} />
+                <Box component="img" src={MasterCardIcon} alt="MasterCard" sx={{ height: 40 }} />
+                <Box component="img" src={AmericanExpressIcon} alt="American Express" sx={{ height: 40 }} />
               </Box>
-
-              <Typography variant="h6" gutterBottom mt={2}>
-                Card details
-              </Typography>
-              <TextField
-                fullWidth
-                label="Card number"
-                variant="outlined"
-                sx={{ mb: 2 }}
-                placeholder="**** **** **** ****"
-                required
-                InputProps={{
-                  endAdornment: (
-                    <Box
-                      component="img"
-                      src={PadlockIcon}
-                      alt="Padlock"
-                      sx={{ height: 20, color: "gray" }}
-                    />
-                  ),
-                }}
-              />
-              <TextField
-                fullWidth
-                label="Cardholder name"
-                variant="outlined"
-                sx={{ mb: 2 }}
-                placeholder="R.M. Rathnayake"
-                required
-              />
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Expiry date"
-                  variant="outlined"
-                  placeholder="MM/YY"
-                  required
-                />
-                <TextField
-                  fullWidth
-                  label="Security code"
-                  variant="outlined"
-                  placeholder="CVC or CVV"
-                  required
-                  InputProps={{
-                    endAdornment: (
-                      <Box
-                        component="img"
-                        src={PadlockIcon}
-                        alt="Padlock"
-                        sx={{ height: 20, color: "gray" }}
-                      />
-                    ),
-                  }}
-                />
-              </Box>
-              <Button
-                variant="contained"
-                color="secondary"
-                type="submit"
-                disabled={isExpired || isSuccess}
-                sx={{ mt: 3.8 }}
-              >
-                Confirm Reservation
-              </Button>
+              <Typography variant="h6" gutterBottom mt={2}>Card details</Typography>
+              <form onSubmit={handleSubmit(handleConfirmBooking)}>
+                <TextField fullWidth label="Card number" variant="outlined" sx={{ mb: 2 }} placeholder="**** **** **** ****" required {...register('cardNumber')} error={!!errors.cardNumber} helperText={errors.cardNumber?.message} />
+                <TextField fullWidth label="Cardholder name" variant="outlined" sx={{ mb: 2 }} placeholder="R.M. Rathnayake" required {...register('cardholderName')} error={!!errors.cardholderName} helperText={errors.cardholderName?.message} />
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <TextField fullWidth label="Expiry date" variant="outlined" placeholder="MM/YY" required {...register('expiryDate')} error={!!errors.expiryDate} helperText={errors.expiryDate?.message} />
+                  <TextField fullWidth label="Security code" variant="outlined" placeholder="CVC or CVV" required {...register('securityCode')} error={!!errors.securityCode} helperText={errors.securityCode?.message} />
+                </Box>
+                <Button variant="contained" color="secondary" type="submit" disabled={isExpired || isSuccess} sx={{ mt: 3.8 }}>Confirm Reservation</Button>
+              </form>
             </CardContent>
           </Card>
         </Grid>

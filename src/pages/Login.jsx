@@ -1,38 +1,35 @@
-import React, { useState } from 'react';
+
+import React from 'react';
 import { Container, TextField, Button, Link, Typography, Box, Alert } from '@mui/material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // For navigation
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginStart, loginSuccess, loginFailure,clearError } from '../redux/user/userSlice';
+import { loginStart, loginSuccess, loginFailure, clearError } from '../redux/user/userSlice';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { loginSchema } from '../validationSchemas'; // make sure this path is correct
 
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { currentUser, error, loading } = useSelector((state) => state.user);
+  const { error, loading } = useSelector((state) => state.user);
 
-   //this use to avoid displaying old errors even after refrehsing the page
-   useEffect(() => {
-    dispatch(clearError()); // Clear error state when the component mounts
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
+
+  useEffect(() => {
+    dispatch(clearError());
   }, [dispatch]);
 
-
-  const handleLogin = async (event) => {
-    event.preventDefault(); // Prevent default form submission
-    console.log('Logging in...');
+  const handleLogin = async (data) => {
     dispatch(loginStart());
     try {
-      const response = await axios.post('/api/user/login', {
-        username,
-        password,
-      });
-      console.log('Response:', response);
+      const response = await axios.post('/api/user/login', data);
       dispatch(loginSuccess(response.data));
-      navigate('/home'); // Redirect to home page after successful login
+      navigate('/home');
     } catch (error) {
-      console.error('Error during login:', error);
       dispatch(loginFailure(error.response?.data?.message || 'Unknown error'));
     }
   };
@@ -52,9 +49,9 @@ export default function Login() {
         </Typography>
         <Box
           component="form"
-          sx={{ width: '100%', mt: 1 }}
           noValidate
-          onSubmit={handleLogin}
+          onSubmit={handleSubmit(handleLogin)}
+          sx={{ width: '100%', mt: 1 }}
         >
           <TextField
             variant="outlined"
@@ -63,10 +60,10 @@ export default function Login() {
             fullWidth
             id="username"
             label="Username"
-            name="username"
-            value={username}
             autoFocus
-            onChange={(e) => setUsername(e.target.value)}
+            {...register('username')}
+            error={!!errors.username}
+            helperText={errors.username?.message}
           />
           <TextField
             variant="outlined"
@@ -76,9 +73,9 @@ export default function Login() {
             name="password"
             label="Password"
             type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register('password')}
+            error={!!errors.password}
+            helperText={errors.password?.message}
           />
           {error && <Alert severity="error">{error}</Alert>}
           <Button
@@ -86,9 +83,10 @@ export default function Login() {
             fullWidth
             variant="contained"
             color="primary"
+            disabled={loading}
             sx={{ mt: 3, mb: 2 }}
           >
-            Login
+            {loading ? 'Loading...' : 'Login'}
           </Button>
           <Box display="flex" justifyContent="center">
             <Link href="/register" variant="body2">

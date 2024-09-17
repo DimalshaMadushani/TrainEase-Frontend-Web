@@ -6,7 +6,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import HomeImg from "../assets/home_img2.jpg";
 
-import { Calculate, Opacity } from "@mui/icons-material";
 
 export default function Home() {
   const [from, setFrom] = useState("");
