@@ -18,6 +18,7 @@ import AboutUs from "./pages/AboutUs";
 import PrivateRoute from "./components/PrivateRoute";
 import theme from "./utils/theme";
 import { ThemeProvider } from "@mui/material/styles";
+import TrainEase from "./pages/TrainEase";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Header />
         <Box sx={{ flex: "1 0 auto", backgroundColor: "#F4F6F6" }}>
           <Routes>
+            <Route path="/" element={<TrainEase/>} />
             <Route path="/home" element={<Home />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/schedules" element={<Schedules />} />
