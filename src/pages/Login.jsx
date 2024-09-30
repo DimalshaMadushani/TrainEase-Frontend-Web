@@ -93,8 +93,15 @@ export default function Login() {
               {"Don't have an account? Register here"}
             </Link>
           </Box>
+          <Box display="flex" justifyContent="center">
+            <Link href="/forgot-password" variant="body2">
+              Forgot Password?
+            </Link>
         </Box>
+
       </Box>
+    </Box>
     </Container>
   );
 }
+

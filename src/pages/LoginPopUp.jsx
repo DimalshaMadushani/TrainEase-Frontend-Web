@@ -73,6 +73,12 @@ const LoginPopUp = ({ onClose }) => {
           <Typography variant="body1" mr={1}>Don't you have an account?</Typography>
           <Link to="/register" style={{ textDecoration: "none"}}>Register</Link>
         </Box>
+        <Box display="flex" justifyContent="center">
+            <Link href="/forgot-password" variant="body2">
+              Forgot Password?
+            </Link>
+        </Box>
+
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>

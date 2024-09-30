@@ -15,6 +15,8 @@ import CheckOut from "./pages/CheckOut";
 import EditProfile from "./pages/EditProfile";
 import Footer from "./components/Footer";
 import AboutUs from "./pages/AboutUs";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import PrivateRoute from "./components/PrivateRoute";
 import theme from "./utils/theme";
 import { ThemeProvider } from "@mui/material/styles";
@@ -36,6 +38,8 @@ function App() {
 
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             
             <Route  element={<PrivateRoute />} >
               <Route path="/train-details" element={<TrainDetails />} />

@@ -18,6 +18,7 @@ export default function Home() {
     async function fetchStations() {
       try {
         const response = await axios.get("/api/search/stations");
+        // console.log("response", response);
         if (response.status === 200) {
           const resStations = response.data.map((station) => ({
             label: station.name,

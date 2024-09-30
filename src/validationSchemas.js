@@ -64,3 +64,23 @@ export const checkoutSchema = yup.object().shape({
     .required("Security code is required")
     .matches(/^[0-9]{3,4}$/, "Security code must be 3 or 4 digits")
 });
+
+
+export const  forgotPasswordSchema = yup.object({
+  email: yup
+      .string()
+      .email('Invalid email')
+      .required('Email is required'),
+});
+
+export const resetPasswordSchema = yup.object({
+  password: yup
+      .string()
+      .required('Password is required')
+      .min(3, 'Password must be at least 3 characters long'),
+  confirmPassword: yup
+      .string()
+      .required('Confirm Password is required')
+      .oneOf([yup.ref('password'), null], 'Passwords must match'),
+
+});
