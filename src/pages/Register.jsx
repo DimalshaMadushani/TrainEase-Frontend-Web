@@ -1,6 +1,4 @@
-
-
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, TextField, Button, Typography, Box, Alert, Grid } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -19,6 +17,7 @@ function Register() {
   const { error, loading } = useSelector(state => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [emailError, setEmailError] = useState(null); // State to track email validation error
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(registerSchema),
@@ -28,12 +27,38 @@ function Register() {
     dispatch(clearError()); // Clear error state when the component mounts
   }, [dispatch]);
 
+  // Email validation function using Abstract API
+  const validateEmail = async (email) => {
+    try {
+      const apiKey =   import.meta.env.VITE_EMAIL_VALIDATION_API_KEY
+      const response = await axios.get(`https://emailvalidation.abstractapi.com/v1/?api_key=${apiKey}&email=${email}`);
+      const { deliverability, is_valid_format } = response.data;
+      if (deliverability === 'DELIVERABLE' && is_valid_format.value) {
+        return true; // Email is valid
+      } else {
+        setEmailError('Invalid or undeliverable email address');
+        return false; // Email is invalid
+      }
+    } catch (error) {
+      setEmailError('Invalid email address');
+      return false;
+    }
+  };
+
   const onSubmit = async data => {
+    setEmailError(null); // Reset email error
+
+    // Validate email using Abstract API
+    const isEmailValid = await validateEmail(data.email);
+    if (!isEmailValid) {
+      return; // Stop form submission if email is invalid
+    }
+
     dispatch(registerStart());
     try {
       const response = await axios.post("/api/user/register", data);
       dispatch(registerSuccess(response.data));
-      navigate("/home"); // Navigate to home after successful registration
+      navigate("/"); // Navigate to home after successful registration
     } catch (error) {
       dispatch(registerFailure(error.response?.data?.message || 'Unknown error'));
     }
@@ -77,8 +102,8 @@ function Register() {
                 id="email"
                 label="Email Address"
                 {...register('email')}
-                error={!!errors.email}
-                helperText={errors.email?.message}
+                error={!!errors.email || !!emailError}
+                helperText={errors.email?.message || emailError}
               />
             </Grid>
             <Grid item xs={12}>

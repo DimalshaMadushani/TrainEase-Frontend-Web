@@ -28,7 +28,7 @@ export default function Login() {
     try {
       const response = await axios.post('/api/user/login', data);
       dispatch(loginSuccess(response.data));
-      navigate('/home');
+      navigate('/');
     } catch (error) {
       dispatch(loginFailure(error.response?.data?.message || 'Unknown error'));
     }
@@ -85,6 +85,7 @@ export default function Login() {
             color="primary"
             disabled={loading}
             sx={{ mt: 3, mb: 2 }}
+            data-testid="login-button"
           >
             {loading ? 'Loading...' : 'Login'}
           </Button>

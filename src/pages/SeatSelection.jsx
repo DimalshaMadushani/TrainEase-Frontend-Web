@@ -207,6 +207,7 @@ export default function SeatSelection() {
               // sx={{ my: "5px", mx: "40px" }} // adjusted marginLeft to marginRight
               onClick={goToCheckOut}
               sx={{ mt: 2 , mx:8 }}
+              data-testid="checkout-button"
             >
               CheckOut
             </Button>

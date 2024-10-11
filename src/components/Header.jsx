@@ -45,7 +45,7 @@ function Header() {
                   open={Boolean(anchorEl)}
                   onClose={handleMenuClose}
                 >
-                  <MenuItem onClick={handleMenuClose} component="a" href="/home">Home</MenuItem>
+                  <MenuItem onClick={handleMenuClose} component="a" href="/">Home</MenuItem>
                   <MenuItem onClick={handleMenuClose} component="a" href="#aboutus">About us</MenuItem>
                   {currentUser ? (
                     <MenuItem onClick={handleMenuClose} component="a" href="/profile">Profile</MenuItem>
@@ -56,7 +56,7 @@ function Header() {
               </>
             ) : (
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', height: '80px' }}>
-                <Button color="inherit" href="/home">Home</Button>
+                <Button color="inherit" href="/">Home</Button>
                 <Button color="inherit" href="/about-us">About us</Button>
                 {currentUser ? (
                   <Button color="inherit" href="/profile">Profile</Button>

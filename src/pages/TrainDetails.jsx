@@ -216,6 +216,7 @@ export default function TrainDetails() {
           sx={{ minWidth: 150 }}
           disabled={!selectedClass} // Disable the button if no class is selected
           onClick={handleSelectSeats}
+          data-testid="select-seats-button"
         >
           Select seats
         </Button>
