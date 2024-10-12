@@ -47,7 +47,7 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password/:token" element={<ResetPassword />} />
               
-              {/* <Route element={<PrivateRoute />} > */}
+              <Route element={<PrivateRoute />} >
                 <Route path="/train-details" element={<TrainDetails />} />
                 <Route path="/seat-selection" element={<SeatSelection />} />
                 <Route path="/profile" element={<Profile />} />
@@ -62,7 +62,7 @@ function App() {
                     </Elements>
                   } 
                 />
-              {/* </Route> */}
+              </Route>
             </Routes>
           </Box>
           <Footer />
