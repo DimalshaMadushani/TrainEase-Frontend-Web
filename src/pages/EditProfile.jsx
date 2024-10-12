@@ -35,7 +35,9 @@ export default function EditProfile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get("/api/user/getProfile");
+        const response = await axios.get(
+          "https://trainease-backend.onrender.com/api/user/getProfile"
+        );
         console.log("Profile fetched", response.data);
         setFormData({
           phone: response.data.phone,
@@ -55,7 +57,10 @@ export default function EditProfile() {
     console.log("Updating...");
     dispatch(updateUserStart());
     try {
-      const response = await axios.post("/api/user/editProfile", formData);
+      const response = await axios.post(
+        "https://trainease-backend.onrender.com/api/user/editProfile",
+        formData
+      );
       dispatch(updateUserSuccess(response.data));
       navigate("/profile");
     } catch (error) {

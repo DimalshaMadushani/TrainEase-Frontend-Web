@@ -43,15 +43,18 @@ export default function SeatSelection() {
   useEffect(() => {
     const fetchSeats = async () => {
       try {
-        const response = await axios.get("/api/search/coach-details", {
-          params: {
-            date,
-            fromStopId: fromStop._id,
-            toStopId: toStop._id,
-            scheduleId: schedule._id,
-            selectedClassId: selectedClass._id,
-          },
-        });
+        const response = await axios.get(
+          "https://trainease-backend.onrender.com/api/search/coach-details",
+          {
+            params: {
+              date,
+              fromStopId: fromStop._id,
+              toStopId: toStop._id,
+              scheduleId: schedule._id,
+              selectedClassId: selectedClass._id,
+            },
+          }
+        );
         console.log("response:", response.data);
         setCoaches(response.data.requestedClassCoaches);
       } catch (error) {
@@ -67,15 +70,18 @@ export default function SeatSelection() {
       setOpenSnackbar(true);
       return;
     } else {
-      const response = await axios.post("/api/booking/holdSeats", {
-        userId: currentUser._id,
-        scheduleId: schedule._id,
-        fromStopId: fromStop._id,
-        toStopId: toStop._id,
-        selectedSeatIds,
-        selectedClassId: selectedClass._id,
-        date,
-      });
+      const response = await axios.post(
+        "https://trainease-backend.onrender.com/api/booking/holdSeats",
+        {
+          userId: currentUser._id,
+          scheduleId: schedule._id,
+          fromStopId: fromStop._id,
+          toStopId: toStop._id,
+          selectedSeatIds,
+          selectedClassId: selectedClass._id,
+          date,
+        }
+      );
       console.log("response:", response.data);
       if (response.status === 200) {
         navigate("/checkout", {
@@ -155,34 +161,34 @@ export default function SeatSelection() {
             bgcolor="#f5f5f5"
             alignItems={{ xs: "center", lg: "flex-start" }}
           > */}
-            <Box
-              display="flex"
-              flexDirection="column"
-              overflow="scroll"
-              height="500px"
-              maxWidth={470}
-              border="1px solid #1C2938"
-              padding={3}
-              borderRadius="8px"
-            >
-              {coaches.map((coach) => (
-                <Box key={coach._id} marginBottom={4}>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                    <TrainTwoToneIcon sx={{ fontSize: 40 }} />
-                    <Typography variant="h6">
-                      {" "}
-                      Coach No: {coach.coachNumber}
-                    </Typography>
-                  </Box>
-                  <SeatLayout
-                    seats={coach.seats}
-                    bookedSeats={coach.alreadyBookedSeats}
-                    selectedSeats={selectedSeatIds}
-                    onSeatSelection={handleSeatSelection}
-                  />
+          <Box
+            display="flex"
+            flexDirection="column"
+            overflow="scroll"
+            height="500px"
+            maxWidth={470}
+            border="1px solid #1C2938"
+            padding={3}
+            borderRadius="8px"
+          >
+            {coaches.map((coach) => (
+              <Box key={coach._id} marginBottom={4}>
+                <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                  <TrainTwoToneIcon sx={{ fontSize: 40 }} />
+                  <Typography variant="h6">
+                    {" "}
+                    Coach No: {coach.coachNumber}
+                  </Typography>
                 </Box>
-              ))}
-            </Box>
+                <SeatLayout
+                  seats={coach.seats}
+                  bookedSeats={coach.alreadyBookedSeats}
+                  selectedSeats={selectedSeatIds}
+                  onSeatSelection={handleSeatSelection}
+                />
+              </Box>
+            ))}
+          </Box>
           {/* </Box> */}
         </Grid>
         <Grid item xs={12} lg={6} mx={{ xs: 0, sm: 10, md: 0 }}>
@@ -206,7 +212,7 @@ export default function SeatSelection() {
               color="secondary"
               // sx={{ my: "5px", mx: "40px" }} // adjusted marginLeft to marginRight
               onClick={goToCheckOut}
-              sx={{ mt: 2 , mx:8 }}
+              sx={{ mt: 2, mx: 8 }}
               data-testid="checkout-button"
             >
               CheckOut

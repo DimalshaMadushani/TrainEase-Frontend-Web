@@ -1,25 +1,42 @@
-import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box, Alert, Link } from '@mui/material';
-import axios from 'axios';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { forgotPasswordSchema } from '../validationSchemas'; // Adjust the path based on your structure
+import React, { useState } from "react";
+import {
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Alert,
+  Link,
+} from "@mui/material";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { forgotPasswordSchema } from "../validationSchemas"; // Adjust the path based on your structure
 
 export default function ForgotPassword() {
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(forgotPasswordSchema),
   });
 
   const handleForgotPassword = async (data) => {
-    setError('');
-    setMessage('');
+    setError("");
+    setMessage("");
     try {
-      const response = await axios.post('/api/user/forgotPassword', data);
-      setMessage(response.data.message || 'A reset link has been sent to your email.');
+      const response = await axios.post(
+        "https://trainease-backend.onrender.com/api/user/forgotPassword",
+        data
+      );
+      setMessage(
+        response.data.message || "A reset link has been sent to your email."
+      );
     } catch (error) {
-      setError(error.response?.data?.message || 'An error occurred.');
+      setError(error.response?.data?.message || "An error occurred.");
     }
   };
 
@@ -27,10 +44,10 @@ export default function ForgotPassword() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          marginTop: '10%',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "10%",
         }}
       >
         <Typography component="h1" variant="h5">
@@ -42,7 +59,7 @@ export default function ForgotPassword() {
           component="form"
           noValidate
           onSubmit={handleSubmit(handleForgotPassword)}
-          sx={{ width: '100%', mt: 1 }}
+          sx={{ width: "100%", mt: 1 }}
         >
           <TextField
             variant="outlined"
@@ -52,7 +69,7 @@ export default function ForgotPassword() {
             id="email"
             label="Email Address"
             autoFocus
-            {...register('email')}
+            {...register("email")}
             error={!!errors.email}
             helperText={errors.email?.message}
           />

@@ -61,7 +61,9 @@ export default function Schedules() {
   useEffect(() => {
     async function fetchStations() {
       try {
-        const response = await axios.get("/api/search/stations");
+        const response = await axios.get(
+          "https://trainease-backend.onrender.com/api/search/stations"
+        );
         if (response.status === 200) {
           const resStations = response.data.map((station) => ({
             label: station.name,
@@ -93,9 +95,12 @@ export default function Schedules() {
       return;
     }
     try {
-      const response = await axios.get(`/api/search/schedules`, {
-        params: { fromName: from, toName: to, date: date },
-      });
+      const response = await axios.get(
+        `https://trainease-backend.onrender.com/api/search/schedules`,
+        {
+          params: { fromName: from, toName: to, date: date },
+        }
+      );
       if (response.status === 200) {
         console.log("response.data", response.data);
         setSchedules(response.data);
@@ -135,7 +140,11 @@ export default function Schedules() {
       <Grid container spacing={2} style={{ marginTop: "20px", mb: 2 }}>
         {schedules.length === 0 ? (
           <Box sx={{ width: "100%" }}>
-            <Typography variant="h4" align="center" sx={{ color: "text.secondary" }}>
+            <Typography
+              variant="h4"
+              align="center"
+              sx={{ color: "text.secondary" }}
+            >
               No schedules Available
             </Typography>
           </Box>

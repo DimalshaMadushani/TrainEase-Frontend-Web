@@ -89,7 +89,7 @@ export default function CheckOut() {
           setIsProcessing(false);
         } else {
           const response = await axios.post(
-            `/api/booking/confirmBooking/${bookingId}`,
+            `https://trainease-backend.onrender.com/api/booking/confirmBooking/${bookingId}`,
             { paymentMethodId: paymentMethod.id }
           );
           setOpen(true);
@@ -114,16 +114,33 @@ export default function CheckOut() {
       <Grid container spacing={3} sx={{ mb: 2 }}>
         {/* Payment Method Card */}
         <Grid item xs={12} md={6}>
-        <Card sx={{ p: 2, pb: 0 }}>
+          <Card sx={{ p: 2, pb: 0 }}>
             <CardContent>
               {/* Stripe's CardElement */}
               <Typography variant="h4" gutterBottom mt={3} mb={2}>
                 Enter Card details
               </Typography>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 3, my: 2 }}>
-                <Box component="img" src={VisaIcon} alt="Visa" sx={{ height: 40 }} />
-                <Box component="img" src={MasterCardIcon} alt="MasterCard" sx={{ height: 40 }} />
-                <Box component="img" src={AmericanExpressIcon} alt="American Express" sx={{ height: 40 }} />
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 3, my: 2 }}
+              >
+                <Box
+                  component="img"
+                  src={VisaIcon}
+                  alt="Visa"
+                  sx={{ height: 40 }}
+                />
+                <Box
+                  component="img"
+                  src={MasterCardIcon}
+                  alt="MasterCard"
+                  sx={{ height: 40 }}
+                />
+                <Box
+                  component="img"
+                  src={AmericanExpressIcon}
+                  alt="American Express"
+                  sx={{ height: 40 }}
+                />
               </Box>
 
               {/* Custom styling for CardElement */}

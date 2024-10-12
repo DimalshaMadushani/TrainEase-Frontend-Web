@@ -24,10 +24,10 @@ export default function TripSummary({
     const fetchStops = async () => {
       try {
         const fromStopResponse = await axios.get(
-          `/api/stationName/${fromStop.stationRef}`
+          `https://trainease-backend.onrender.com/api/stationName/${fromStop.stationRef}`
         );
         const toStopResponse = await axios.get(
-          `/api/stationName/${toStop.stationRef}`
+          `https://trainease-backend.onrender.com/api/stationName/${toStop.stationRef}`
         );
         setFromStopName(fromStopResponse.data.name);
         setToStopName(toStopResponse.data.name);
@@ -73,20 +73,25 @@ export default function TripSummary({
 
       <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={12} textAlign="center">
-          <Box sx={{display: "flex", alignItems: "center", mb: 2 ,justifyContent:'center'}}>
-            <TrainIcon sx={{ fontSize: 35,mr:0.5 }} />
-          <Typography variant="h6" >
-            {trainName}
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              mb: 2,
+              justifyContent: "center",
+            }}
+          >
+            <TrainIcon sx={{ fontSize: 35, mr: 0.5 }} />
+            <Typography variant="h6">{trainName}</Typography>
           </Box>
         </Grid>
         <Grid item xs={4} textAlign="center" sx={{ alignItems: "flex-end" }}>
           <Box sx={{ justifyContent: "flex-end" }}>
-          <Typography variant="body1" gutterBottom>
-            {fromStop.departureTime}
-          </Typography>
-          <LocationOnIcon sx={{ color: "#207497" }} />
-          <Typography variant="body2">{fromStopName}</Typography>
+            <Typography variant="body1" gutterBottom>
+              {fromStop.departureTime}
+            </Typography>
+            <LocationOnIcon sx={{ color: "#207497" }} />
+            <Typography variant="body2">{fromStopName}</Typography>
           </Box>
         </Grid>
         <Grid item xs={4}>
@@ -114,28 +119,28 @@ export default function TripSummary({
       </Grid>
 
       <Box sx={{ textAlign: "center", marginTop: "20px" }}>
-        <Typography variant="body1" sx={{mb:0.7}}>
+        <Typography variant="body1" sx={{ mb: 0.7 }}>
           <strong>Date:</strong> {date}
         </Typography>
-        <Typography variant="body1" >
+        <Typography variant="body1">
           <strong>Journey Duration:</strong>{" "}
           {getTimeDiffInMins(fromStop.departureTime, toStop.arrivalTime)}
         </Typography>
         <Divider style={{ margin: "20px 0" }} />
         <Box>
-          <Typography variant="body1"  sx={{mb:0.7}}>
+          <Typography variant="body1" sx={{ mb: 0.7 }}>
             <strong>Class: </strong>
             <span style={{ color: "#207497", fontWeight: "bold" }}>
               {selectedClass.name}
             </span>
           </Typography>
-          <Typography variant="body1"  sx={{mb:0.7}}>
+          <Typography variant="body1" sx={{ mb: 0.7 }}>
             <strong>Total Seats: </strong>
             <span style={{ color: "#207497", fontWeight: "bold" }}>
               {selectedSeatCount}
             </span>
           </Typography>
-          <Typography variant="body1"  sx={{mb:0.7}}>
+          <Typography variant="body1" sx={{ mb: 0.7 }}>
             <strong>Fare Calculation: </strong>
             <span style={{ color: "#207497", fontWeight: "bold" }}>
               {selectedClass.priceFactor * (toStop.price - fromStop.price)} x{" "}

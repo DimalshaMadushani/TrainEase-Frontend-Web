@@ -1,21 +1,37 @@
-
-import React from 'react';
-import { Container, TextField, Button, Link, Typography, Box, Alert } from '@mui/material';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginStart, loginSuccess, loginFailure, clearError } from '../redux/user/userSlice';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { loginSchema } from '../validationSchemas'; // make sure this path is correct
+import React from "react";
+import {
+  Container,
+  TextField,
+  Button,
+  Link,
+  Typography,
+  Box,
+  Alert,
+} from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+  clearError,
+} from "../redux/user/userSlice";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../validationSchemas"; // make sure this path is correct
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.user);
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(loginSchema),
   });
 
@@ -26,11 +42,14 @@ export default function Login() {
   const handleLogin = async (data) => {
     dispatch(loginStart());
     try {
-      const response = await axios.post('/api/user/login', data);
+      const response = await axios.post(
+        "https://trainease-backend.onrender.com/api/user/login",
+        data
+      );
       dispatch(loginSuccess(response.data));
-      navigate('/');
+      navigate("/");
     } catch (error) {
-      dispatch(loginFailure(error.response?.data?.message || 'Unknown error'));
+      dispatch(loginFailure(error.response?.data?.message || "Unknown error"));
     }
   };
 
@@ -38,10 +57,10 @@ export default function Login() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          marginTop: '10%',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "10%",
         }}
       >
         <Typography component="h1" variant="h5">
@@ -51,7 +70,7 @@ export default function Login() {
           component="form"
           noValidate
           onSubmit={handleSubmit(handleLogin)}
-          sx={{ width: '100%', mt: 1 }}
+          sx={{ width: "100%", mt: 1 }}
         >
           <TextField
             variant="outlined"
@@ -61,7 +80,7 @@ export default function Login() {
             id="username"
             label="Username"
             autoFocus
-            {...register('username')}
+            {...register("username")}
             error={!!errors.username}
             helperText={errors.username?.message}
           />
@@ -73,7 +92,7 @@ export default function Login() {
             name="password"
             label="Password"
             type="password"
-            {...register('password')}
+            {...register("password")}
             error={!!errors.password}
             helperText={errors.password?.message}
           />
@@ -87,7 +106,7 @@ export default function Login() {
             sx={{ mt: 3, mb: 2 }}
             data-testid="login-button"
           >
-            {loading ? 'Loading...' : 'Login'}
+            {loading ? "Loading..." : "Login"}
           </Button>
           <Box display="flex" justifyContent="center">
             <Link href="/register" variant="body2">
@@ -98,11 +117,9 @@ export default function Login() {
             <Link href="/forgot-password" variant="body2">
               Forgot Password?
             </Link>
+          </Box>
         </Box>
-
       </Box>
-    </Box>
     </Container>
   );
 }
-

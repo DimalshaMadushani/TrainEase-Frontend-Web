@@ -33,9 +33,12 @@ export default function TrainDetails() {
         const scheduleId = schedule._id;
         const fromStopId = fromStop._id;
         const toStopId = toStop._id;
-        const response = await axios.get("/api/search/train-details", {
-          params: { scheduleId, fromStopId, toStopId },
-        });
+        const response = await axios.get(
+          "https://trainease-backend.onrender.com/api/search/train-details",
+          {
+            params: { scheduleId, fromStopId, toStopId },
+          }
+        );
         setTrainDetails(response.data);
       } catch (error) {
         console.error("Failed to fetch train details:", error);
@@ -78,7 +81,7 @@ export default function TrainDetails() {
   };
 
   return (
-    <Box sx={{ padding: 4, mx:5 }}>
+    <Box sx={{ padding: 4, mx: 5 }}>
       <Typography
         variant="h4"
         component="h1"
@@ -153,7 +156,7 @@ export default function TrainDetails() {
       <Grid container spacing={4} sx={{ marginTop: 2 }}>
         <Box></Box>
         {trainDetails.coachTypes.map((classOption) => (
-          <Grid item xs={12} lg={4} key={classOption._id} >
+          <Grid item xs={12} lg={4} key={classOption._id}>
             <Paper
               elevation={3}
               sx={{
@@ -183,7 +186,12 @@ export default function TrainDetails() {
                   marginBottom: 2,
                 }}
               >
-                <Typography variant="h6" component="h2" color={"primary" } sx={{fontWeight:'bold'}}>
+                <Typography
+                  variant="h6"
+                  component="h2"
+                  color={"primary"}
+                  sx={{ fontWeight: "bold" }}
+                >
                   {classOption.name}
                 </Typography>
                 <Typography
@@ -207,7 +215,6 @@ export default function TrainDetails() {
             </Paper>
           </Grid>
         ))}
-        
       </Grid>
       <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 3 }}>
         <Button

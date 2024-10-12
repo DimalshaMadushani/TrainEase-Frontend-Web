@@ -13,7 +13,11 @@ import {
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom"; // For navigation
 import { useDispatch, useSelector } from "react-redux";
-import {loginStart,loginSuccess,loginFailure} from "../redux/user/userSlice";
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+} from "../redux/user/userSlice";
 
 const LoginPopUp = ({ onClose }) => {
   const [username, setUsername] = useState("");
@@ -21,30 +25,27 @@ const LoginPopUp = ({ onClose }) => {
   const [login, setLogin] = useState(false); // State to store login status
   const navigate = useNavigate(); // Hook for navigation
   const dispatch = useDispatch();
-  const {currentUser,error,loading} = useSelector((state) => state.user);
-
-
-
+  const { currentUser, error, loading } = useSelector((state) => state.user);
 
   const handleLogin = async () => {
     console.log("Logging in...");
     dispatch(loginStart());
     try {
-      const response = await axios.post("/api/user/login", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "https://trainease-backend.onrender.com/api/user/login",
+        {
+          username,
+          password,
+        }
+      );
       console.log("Response:", response);
       dispatch(loginSuccess(response.data));
       onClose();
       navigate("/schedules"); // Redirect to home page after successful login
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error during login:", error);
       dispatch(loginFailure(error.response?.data?.message || "Unknown error"));
     }
-
-    
   };
 
   return (
@@ -70,15 +71,18 @@ const LoginPopUp = ({ onClose }) => {
         />
         {error && <Alert severity="error">{error}</Alert>}
         <Box textAlign="center" marginTop="20px" display="flex">
-          <Typography variant="body1" mr={1}>Don't you have an account?</Typography>
-          <Link to="/register" style={{ textDecoration: "none"}}>Register</Link>
+          <Typography variant="body1" mr={1}>
+            Don't you have an account?
+          </Typography>
+          <Link to="/register" style={{ textDecoration: "none" }}>
+            Register
+          </Link>
         </Box>
         <Box display="flex" justifyContent="center">
-            <Link href="/forgot-password" variant="body2">
-              Forgot Password?
-            </Link>
+          <Link href="/forgot-password" variant="body2">
+            Forgot Password?
+          </Link>
         </Box>
-
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>

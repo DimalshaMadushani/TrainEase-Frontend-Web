@@ -7,7 +7,6 @@ import { setUpUser, deleteUser } from "../redux/user/userSlice";
 import { TailSpin } from "react-loader-spinner";
 import { Box } from "@mui/material";
 
-
 export default function PrivateRoute() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const dispatch = useDispatch();
@@ -16,7 +15,9 @@ export default function PrivateRoute() {
   useEffect(() => {
     async function checkAuth() {
       try {
-        const response = await axios.get("/api/user/getProfile");
+        const response = await axios.get(
+          "https://trainease-backend.onrender.com/api/user/getProfile"
+        );
         setIsAuthenticated(true);
         dispatch(setUpUser(response.data));
       } catch (error) {

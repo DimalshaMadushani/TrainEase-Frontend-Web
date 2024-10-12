@@ -1,25 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { Container, TextField, Button, Typography, Box, Alert, Grid } from '@mui/material';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import {
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Alert,
+  Grid,
+} from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   registerStart,
   registerSuccess,
   registerFailure,
   clearError,
-} from '../redux/user/userSlice';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { registerSchema } from '../validationSchemas'; // Ensure this path is correct
+} from "../redux/user/userSlice";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registerSchema } from "../validationSchemas"; // Ensure this path is correct
 
 function Register() {
-  const { error, loading } = useSelector(state => state.user);
+  const { error, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState(null); // State to track email validation error
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(registerSchema),
   });
 
@@ -30,22 +42,24 @@ function Register() {
   // Email validation function using Abstract API
   const validateEmail = async (email) => {
     try {
-      const apiKey =   import.meta.env.VITE_EMAIL_VALIDATION_API_KEY
-      const response = await axios.get(`https://emailvalidation.abstractapi.com/v1/?api_key=${apiKey}&email=${email}`);
+      const apiKey = import.meta.env.VITE_EMAIL_VALIDATION_API_KEY;
+      const response = await axios.get(
+        `https://emailvalidation.abstractapi.com/v1/?api_key=${apiKey}&email=${email}`
+      );
       const { deliverability, is_valid_format } = response.data;
-      if (deliverability === 'DELIVERABLE' && is_valid_format.value) {
+      if (deliverability === "DELIVERABLE" && is_valid_format.value) {
         return true; // Email is valid
       } else {
-        setEmailError('Invalid or undeliverable email address');
+        setEmailError("Invalid or undeliverable email address");
         return false; // Email is invalid
       }
     } catch (error) {
-      setEmailError('Invalid email address');
+      setEmailError("Invalid email address");
       return false;
     }
   };
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     setEmailError(null); // Reset email error
 
     // Validate email using Abstract API
@@ -56,11 +70,16 @@ function Register() {
 
     dispatch(registerStart());
     try {
-      const response = await axios.post("/api/user/register", data);
+      const response = await axios.post(
+        "https://trainease-backend.onrender.com/api/user/register",
+        data
+      );
       dispatch(registerSuccess(response.data));
       navigate("/"); // Navigate to home after successful registration
     } catch (error) {
-      dispatch(registerFailure(error.response?.data?.message || 'Unknown error'));
+      dispatch(
+        registerFailure(error.response?.data?.message || "Unknown error")
+      );
     }
   };
 
@@ -88,7 +107,7 @@ function Register() {
                 id="username"
                 label="Username"
                 autoFocus
-                {...register('username')}
+                {...register("username")}
                 error={!!errors.username}
                 helperText={errors.username?.message}
               />
@@ -101,7 +120,7 @@ function Register() {
                 fullWidth
                 id="email"
                 label="Email Address"
-                {...register('email')}
+                {...register("email")}
                 error={!!errors.email || !!emailError}
                 helperText={errors.email?.message || emailError}
               />
@@ -114,7 +133,7 @@ function Register() {
                 fullWidth
                 id="phone"
                 label="Phone Number"
-                {...register('phone')}
+                {...register("phone")}
                 error={!!errors.phone}
                 helperText={errors.phone?.message}
               />
@@ -129,13 +148,17 @@ function Register() {
                 label="Password"
                 type="password"
                 id="password"
-                {...register('password')}
+                {...register("password")}
                 error={!!errors.password}
                 helperText={errors.password?.message}
               />
             </Grid>
           </Grid>
-          {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+          {error && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {error}
+            </Alert>
+          )}
           <Button
             type="submit"
             fullWidth

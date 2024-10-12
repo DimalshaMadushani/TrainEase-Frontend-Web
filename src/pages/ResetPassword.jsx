@@ -1,31 +1,46 @@
-import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box, Alert, Link } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { resetPasswordSchema } from '../validationSchemas'; // Adjust the path based on your structure
+import React, { useState } from "react";
+import {
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Alert,
+  Link,
+} from "@mui/material";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { resetPasswordSchema } from "../validationSchemas"; // Adjust the path based on your structure
 
 export default function ResetPassword() {
   const { token } = useParams();
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(resetPasswordSchema),
   });
 
   const handleResetPassword = async (data) => {
-    setError('');
-    setMessage('');
+    setError("");
+    setMessage("");
     try {
-      const response = await axios.put(`/api/user/resetPassword`, {
-        resetToken: token,
-        newPassword: data.password,
-      });
-      setMessage('Password has been successfully reset.');
+      const response = await axios.put(
+        `https://trainease-backend.onrender.com/api/user/resetPassword`,
+        {
+          resetToken: token,
+          newPassword: data.password,
+        }
+      );
+      setMessage("Password has been successfully reset.");
     } catch (error) {
-      setError(error.response?.data?.message || 'Failed to reset password.');
+      setError(error.response?.data?.message || "Failed to reset password.");
     }
   };
 
@@ -33,10 +48,10 @@ export default function ResetPassword() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          marginTop: '10%',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "10%",
         }}
       >
         <Typography component="h1" variant="h5">
@@ -48,7 +63,7 @@ export default function ResetPassword() {
           component="form"
           noValidate
           onSubmit={handleSubmit(handleResetPassword)}
-          sx={{ width: '100%', mt: 1 }}
+          sx={{ width: "100%", mt: 1 }}
         >
           <TextField
             variant="outlined"
@@ -58,7 +73,7 @@ export default function ResetPassword() {
             id="password"
             label="New Password"
             type="password"
-            {...register('password')}
+            {...register("password")}
             error={!!errors.password}
             helperText={errors.password?.message}
           />
@@ -70,7 +85,7 @@ export default function ResetPassword() {
             id="confirmPassword"
             label="Confirm New Password"
             type="password"
-            {...register('confirmPassword')}
+            {...register("confirmPassword")}
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword?.message}
           />
