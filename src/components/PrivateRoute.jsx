@@ -18,6 +18,7 @@ export default function PrivateRoute() {
         const response = await axios.get(
           "https://trainease-backend.onrender.com/api/user/getProfile"
         );
+        console.log("response", response);
         setIsAuthenticated(true);
         dispatch(setUpUser(response.data));
       } catch (error) {
