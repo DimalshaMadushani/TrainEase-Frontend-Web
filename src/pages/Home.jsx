@@ -17,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchStations() {
       try {
-        const response = await axios.get("/api/search/stations");
+        const response = await axios.get("https://trainease-backend.onrender.com/api/search/stations");
         // console.log("response", response);
         if (response.status === 200) {
           const resStations = response.data.map((station) => ({
