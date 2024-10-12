@@ -46,7 +46,7 @@ export default function Home() {
       return;
     }
     try {
-      const response = await axios.get(`/api/search/schedules`, {
+      const response = await axios.get(`https://trainease-backend.onrender.com/api/search/schedules`, {
         params: { fromName: from, toName: to, date: date },
       });
       if (response.status === 200) {
