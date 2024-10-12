@@ -14,7 +14,8 @@ export default function BookingCard({ booking }) {
   const handleCancelBooking = async (bookingId) => {
     try {
       const response = await axios.delete(
-        `https://trainease-backend.onrender.com/api/user/cancelBooking/${bookingId}`
+        `https://trainease-backend.onrender.com/api/user/cancelBooking/${bookingId}`,
+        { withCredentials: true }
       );
       if (response.status === 200) {
         alert("Booking cancelled successfully");

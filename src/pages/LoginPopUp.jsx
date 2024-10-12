@@ -36,7 +36,8 @@ const LoginPopUp = ({ onClose }) => {
         {
           username,
           password,
-        }
+        },
+        { withCredentials: true }
       );
       console.log("Response:", response);
       dispatch(loginSuccess(response.data));

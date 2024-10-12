@@ -44,7 +44,8 @@ export default function Login() {
     try {
       const response = await axios.post(
         "https://trainease-backend.onrender.com/api/user/login",
-        data
+        data,
+        { withCredentials: true }
       );
       dispatch(loginSuccess(response.data));
       navigate("/");

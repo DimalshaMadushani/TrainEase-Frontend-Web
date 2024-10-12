@@ -30,7 +30,8 @@ export default function ForgotPassword() {
     try {
       const response = await axios.post(
         "https://trainease-backend.onrender.com/api/user/forgotPassword",
-        data
+        data, 
+        { withCredentials: true }
       );
       setMessage(
         response.data.message || "A reset link has been sent to your email."

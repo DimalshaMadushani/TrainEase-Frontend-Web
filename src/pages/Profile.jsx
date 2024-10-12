@@ -32,7 +32,9 @@ export default function Profile() {
 
   const handleSignout = async () => {
     try {
-      await axios.get("https://trainease-backend.onrender.com/api/user/logout");
+      await axios.get("https://trainease-backend.onrender.com/api/user/logout",
+        { withCredentials: true }
+      );
       navigate("/login");
     } catch (error) {
       console.error("Failed to sign out:", error);

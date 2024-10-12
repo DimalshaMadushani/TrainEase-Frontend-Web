@@ -53,7 +53,8 @@ export default function SeatSelection() {
               scheduleId: schedule._id,
               selectedClassId: selectedClass._id,
             },
-          }
+            withCredentials: true,
+          },
         );
         console.log("response:", response.data);
         setCoaches(response.data.requestedClassCoaches);
@@ -80,7 +81,8 @@ export default function SeatSelection() {
           selectedSeatIds,
           selectedClassId: selectedClass._id,
           date,
-        }
+        }, 
+        { withCredentials: true }
       );
       console.log("response:", response.data);
       if (response.status === 200) {

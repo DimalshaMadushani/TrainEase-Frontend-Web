@@ -37,6 +37,7 @@ export default function TrainDetails() {
           "https://trainease-backend.onrender.com/api/search/train-details",
           {
             params: { scheduleId, fromStopId, toStopId },
+            withCredentials: true,
           }
         );
         setTrainDetails(response.data);

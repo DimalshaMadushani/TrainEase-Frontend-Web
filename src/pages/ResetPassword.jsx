@@ -36,7 +36,8 @@ export default function ResetPassword() {
         {
           resetToken: token,
           newPassword: data.password,
-        }
+        },
+        { withCredentials: true }
       );
       setMessage("Password has been successfully reset.");
     } catch (error) {

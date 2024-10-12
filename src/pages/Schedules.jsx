@@ -62,7 +62,8 @@ export default function Schedules() {
     async function fetchStations() {
       try {
         const response = await axios.get(
-          "https://trainease-backend.onrender.com/api/search/stations"
+          "https://trainease-backend.onrender.com/api/search/stations",
+          { withCredentials: true }
         );
         if (response.status === 200) {
           const resStations = response.data.map((station) => ({
@@ -99,7 +100,8 @@ export default function Schedules() {
         `https://trainease-backend.onrender.com/api/search/schedules`,
         {
           params: { fromName: from, toName: to, date: date },
-        }
+          withCredentials: true,
+        },
       );
       if (response.status === 200) {
         console.log("response.data", response.data);

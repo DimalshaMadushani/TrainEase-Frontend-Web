@@ -90,7 +90,8 @@ export default function CheckOut() {
         } else {
           const response = await axios.post(
             `https://trainease-backend.onrender.com/api/booking/confirmBooking/${bookingId}`,
-            { paymentMethodId: paymentMethod.id }
+            { paymentMethodId: paymentMethod.id },
+            { withCredentials: true }
           );
           setOpen(true);
           setIsProcessing(false);

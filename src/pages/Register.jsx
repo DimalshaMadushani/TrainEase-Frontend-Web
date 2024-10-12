@@ -72,7 +72,8 @@ function Register() {
     try {
       const response = await axios.post(
         "https://trainease-backend.onrender.com/api/user/register",
-        data
+        data,
+        { withCredentials: true }
       );
       dispatch(registerSuccess(response.data));
       navigate("/"); // Navigate to home after successful registration

@@ -24,10 +24,12 @@ export default function TripSummary({
     const fetchStops = async () => {
       try {
         const fromStopResponse = await axios.get(
-          `https://trainease-backend.onrender.com/api/stationName/${fromStop.stationRef}`
+          `https://trainease-backend.onrender.com/api/stationName/${fromStop.stationRef}`,
+          { withCredentials: true }
         );
         const toStopResponse = await axios.get(
-          `https://trainease-backend.onrender.com/api/stationName/${toStop.stationRef}`
+          `https://trainease-backend.onrender.com/api/stationName/${toStop.stationRef}`,
+          { withCredentials: true }
         );
         setFromStopName(fromStopResponse.data.name);
         setToStopName(toStopResponse.data.name);

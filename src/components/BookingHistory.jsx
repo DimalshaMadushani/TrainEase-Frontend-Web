@@ -13,7 +13,8 @@ export default function BookingHistory() {
     async function fetchBookingHistory() {
       try {
         const response = await axios.get(
-          "https://trainease-backend.onrender.com/api/user/history"
+          "https://trainease-backend.onrender.com/api/user/history",
+          { withCredentials: true }
         );
         setBookingHistory(response.data);
         setLoading(false);

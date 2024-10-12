@@ -36,7 +36,10 @@ export default function EditProfile() {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          "https://trainease-backend.onrender.com/api/user/getProfile"
+          "https://trainease-backend.onrender.com/api/user/getProfile",
+          {
+            withCredentials: true,
+          }
         );
         console.log("Profile fetched", response.data);
         setFormData({
@@ -59,7 +62,10 @@ export default function EditProfile() {
     try {
       const response = await axios.post(
         "https://trainease-backend.onrender.com/api/user/editProfile",
-        formData
+        formData,
+        {
+          withCredentials: true,
+        }
       );
       dispatch(updateUserSuccess(response.data));
       navigate("/profile");
