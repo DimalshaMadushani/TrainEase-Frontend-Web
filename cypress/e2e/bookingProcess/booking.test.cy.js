@@ -4,7 +4,7 @@
 describe('TrainEase Booking Process - Login, Book, Select Seats, and Complete Payment', () => {
     it('should log in, search for trains, select a schedule, choose a class, select seats, proceed to checkout, and confirm the reservation', () => {
       // Step 1: Visit the home page
-      cy.visit('http://localhost:5173');
+      cy.visit('https://trainease-frontend-web.onrender.com');
   
       // Step 2: Click on the "Login" link in the navigation bar
       cy.contains('Login').click();
@@ -13,14 +13,14 @@ describe('TrainEase Booking Process - Login, Book, Select Seats, and Complete Pa
       cy.url().should('include', '/login');
   
       // Step 4: Enter the username and password
-      cy.get('input[name="username"]').type('dimalsha1'); // Use the appropriate selector for the username field
-      cy.get('input[name="password"]').type('12345'); // Use the appropriate selector for the password field
+      cy.get('input[name="username"]').type('pasan123'); // Use the appropriate selector for the username field
+      cy.get('input[name="password"]').type('pasan123'); // Use the appropriate selector for the password field
   
       // Step 5: Click the login button
       cy.get('[data-testid="login-button"]').click();
   
       // Step 6: Assert that the user is redirected back to the home page after login
-      cy.url().should('eq', 'http://localhost:5173/');
+      cy.url().should('eq', 'https://trainease-frontend-web.onrender.com/');
   
       // Step 7: Click on the "From" location input and select 'Ahangama'
       cy.get('[data-testid="from-input"]').click();
@@ -65,7 +65,7 @@ describe('TrainEase Booking Process - Login, Book, Select Seats, and Complete Pa
       cy.url().should('include', '/checkout');
   
       // Step 20: Enter payment details using the correct data-testid selectors
-    cy.get('[data-testid="card-number"]').type('1234123412341234'); // Use correct data-testid for card number
+    cy.get('[data-testid="card-number"]').type('4242424242424242'); // Use correct data-testid for card number
     cy.get('[data-testid="cardholder-name"]').type('A G D Madushani'); // Use correct data-testid for cardholder name
     cy.get('[data-testid="expiry-date"]').type('10/30'); // Use correct data-testid for expiry date
     cy.get('[data-testid="cvv"]').type('345'); // Use correct data-testid for CVV
