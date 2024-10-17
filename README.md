@@ -5,7 +5,7 @@ The TrainEase web application allows users to effortlessly search for trains, bo
 
 
 <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-    <img src="./src/assets/Home.png" alt="Home Screen"/>
+    <img src="./src/assets/Home.PNG" alt="Home Screen"/>
 </div>
 
 ## Features
