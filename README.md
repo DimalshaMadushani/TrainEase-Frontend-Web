@@ -10,37 +10,29 @@ TrainEase is a user-friendly web application that simplifies train travel. It al
 
 ## Features
 
-- **User Authentication**
-  - Secure login and registration.
-  - Password recovery via email.
+- **User Authentication:** Provides secure login and registration, along with password recovery via email for easy account access. 
+  
 
-- **Ticket Booking**
-  - Select starting point, destination, and travel date.
-  - View and select available trains.
+- **Ticket Booking:** Allows users to select their starting point, destination, and travel date, displaying available trains for easy selection.
+  
 
-- **Class and Seat Selection**
-  - Choose travel class (First, Second, Third).
-  - Interactive seat layout with available and booked seats.
+- **Class and Seat Selection:** Users can choose their preferred travel class (First, Second, Third) and view an interactive seat layout showing available and booked seats.
+  
 
-- **Payment Processing**
-  - Secure payment options.
-  - E-ticket confirmation via email.
+- **Payment Processing:** Offers secure payment processing via Stripe API ensuring users receive e-ticket confirmations via email after successful transactions.
+  
+- **Profile Management:** Enables users to edit and manage their personal profile details for a personalized experience.
+  
 
-- **Profile Management**
-  - Edit personal profile details.
+- **Booking History:** Allows users to access and review past bookings for easy reference and planning.
 
-- **Booking History**
-  - Access past bookings.
+- **Booking Cancellations:** Provides the option to cancel bookings before the travel date, ensuring flexibility for users.
 
-- **Booking Cancellations**
-  - Cancel bookings before travel date.
+- **Real-Time Notifications:** Sends timely updates regarding booking confirmations, cancellations, and schedule changes to keep users informed.
+  
 
-- **Real-Time Notifications:**
-  - Receive timely updates regarding booking confirmations, cancellations, and shedule updates.
-
-- **Logout Option**
-  - Securely sign out to protect user data.
-
+- **Logout Option:** Allows users to securely sign out, protecting their personal data and account information.
+  
 
 ## Tech Stack
 
