@@ -39,6 +39,7 @@ TrainEase is a user-friendly web application that simplifies train travel. It al
 - **Frontend:** 
   - [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
   - [Vite](https://vitejs.dev/) - A build tool that improves development experience and performance.
+  - [Material UI](https://mui.com/) - A popular React component library that provides pre-designed UI components, ensuring a consistent and stylish look throughout the application.
 
 - **Backend:** 
   - [Node.js](https://nodejs.org/) - JavaScript runtime built on Chrome's V8 JavaScript engine.
@@ -74,8 +75,8 @@ TrainEase is a user-friendly web application that simplifies train travel. It al
 
     ```bash
    VITE_HOST="your-ipv4-address"
-   VITE_EMAIL_VALIDATION_API_KEY="5cdac20be06e417397bd927015ae8448"
-   VITE_STRIPE_PUBLIC_KEY="pk_test_51Q8k6WIqn2MGjXIL8XDtenhDIaTCstp6lNwrY1qtyU79fcmeKcyxvzI7CUKz3ge4CLakDeuXEYo5QuUmIXkmn9FO00xPqC56kW"
+   VITE_EMAIL_VALIDATION_API_KEY
+   VITE_STRIPE_PUBLIC_KEY
 
 4. Start the development server
 
