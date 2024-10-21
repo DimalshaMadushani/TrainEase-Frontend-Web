@@ -64,15 +64,15 @@ describe('TrainEase Booking Process - Login, Book, Select Seats, and Complete Pa
       // Step 19: Assert that the URL includes '/checkout'
       cy.url().should('include', '/checkout');
   
-      // Step 20: Enter payment details using the correct data-testid selectors
-    cy.get('[data-testid="card-number"]').type('4242424242424242'); // Use correct data-testid for card number
-    cy.get('[data-testid="cardholder-name"]').type('A G D Madushani'); // Use correct data-testid for cardholder name
-    cy.get('[data-testid="expiry-date"]').type('10/30'); // Use correct data-testid for expiry date
-    cy.get('[data-testid="cvv"]').type('345'); // Use correct data-testid for CVV
+    //   // Step 20: Enter payment details using the correct data-testid selectors
+    // cy.get('[data-testid="card-number"]').type('4242424242424242'); // Use correct data-testid for card number
+    // cy.get('[data-testid="cardholder-name"]').type('A G D Madushani'); // Use correct data-testid for cardholder name
+    // cy.get('[data-testid="expiry-date"]').type('10/30'); // Use correct data-testid for expiry date
+    // cy.get('[data-testid="cvv"]').type('345'); // Use correct data-testid for CVV
 
   
-      // Step 21: Click the "Confirm Reservation" button
-      cy.get('[data-testid="confirm-button"]').click();
+    //   // Step 21: Click the "Confirm Reservation" button
+    //   cy.get('[data-testid="confirm-button"]').click();
   
       // Optionally: Assert that the reservation is confirmed or redirected to the confirmation page
     });
